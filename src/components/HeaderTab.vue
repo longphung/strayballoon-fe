@@ -86,6 +86,7 @@ export default {
 
   & a {
     margin-right: 1.625rem;
+    text-decoration: none;
 
     &:last-child {
       margin-right: 0;

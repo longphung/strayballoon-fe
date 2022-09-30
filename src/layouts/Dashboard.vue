@@ -1,25 +1,30 @@
 <template>
-  <div class="container">
-    <HeaderTab />
-    <main>
-      <router-view></router-view>
-    </main>
-  </div>
+  <HeaderTab />
+  <main>
+    <SideBar></SideBar>
+    <router-view></router-view>
+  </main>
 </template>
 
 <script>
 import HeaderTab from '../components/HeaderTab.vue';
+import SideBar from '../components/SideBar.vue';
 
 export default {
   name: 'DashboardLayout',
   components: {
     HeaderTab,
+    SideBar,
   },
 };
 </script>
 
-<style scoped>
-.container {
-  background-color: #272D2D;
+<style>
+body {
+  background-color: #272d2d;
+}
+
+main {
+
 }
 </style>

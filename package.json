@@ -29,5 +29,8 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "volta": {
+    "node": "16.17.1"
+  }
 }
