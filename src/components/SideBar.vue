@@ -45,12 +45,13 @@ export default {
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  padding: 0 2.5rem;
 }
 
 .sidebar__item {
   color: white;
-  margin-top: 4.5rem;
+  margin-top: 4.375rem;
 
   &:first-child {
     margin-top: 0;

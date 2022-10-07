@@ -25,6 +25,7 @@ body {
 }
 
 main {
-
+  display: flex;
+  margin-bottom: 1.125rem;
 }
 </style>

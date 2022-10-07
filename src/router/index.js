@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '../layouts/Dashboard.vue';
+import DashboardPage from '../pages/DashboardPage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -7,8 +8,14 @@ const router = createRouter({
     {
       path: '/',
       component: Dashboard,
+      children: [
+        {
+          path: '/',
+          component: DashboardPage,
+        },
+      ],
     },
-  ]
+  ],
 });
 
 export default router;
