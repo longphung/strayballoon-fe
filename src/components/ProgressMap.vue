@@ -1,54 +1,53 @@
 <script>
-import VIcon from './VIcon.vue';
+// import VIcon from './VIcon.vue';
+import ProgressStudentAvatar from './ProgressStudentAvatar.vue';
 
 export default {
   name: 'ProgressMap',
   components: {
-    VIcon
+    ProgressStudentAvatar,
   },
   data() {
     return {
       progress: 0,
-    }
+    };
   },
-  computed: {
-    offset() {
-      return 0
-    }
-  }
 };
 </script>
 
 <template>
-  <div class='progress-map'><p class="progress-title">Progress Map</p>
-    <div class="bar"></div>
-    <span class='student-avatar' :style="`left: ${offset}`">&#9675;</span>
+  <div class="progress-map">
+    <p class="progress-title">Progress Map</p>
+    <div class="progress-bar">
+      <div class="bar"></div>
+      <ProgressStudentAvatar :progress='progress' />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .progress-map {
-  background: #D9D9D9;
+  background: #d9d9d9;
   border-radius: 20px;
   width: 36.5rem;
-  position: relative
 }
+
 .progress-title {
   padding-left: 50px;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
+  font-size: 1.125rem;
+  margin-bottom: 10rem;
 }
-.student-avatar {
-  position: absolute;
-  font-size: 50px;
+
+.progress-bar {
+  position: relative;
+  margin: 0 1.375rem;
 }
-.bar{
-  position: absolute;
-  width: 540px;
-  height: 0px;
-  color: #6F6F6F;
-  border: 9px solid #6F6F6F;
+
+.bar {
+  width: 33.75rem;
+  height: 0;
+  color: #6f6f6f;
+  border: 9px solid #6f6f6f;
+  border-radius: 40px;
 }
 </style>
