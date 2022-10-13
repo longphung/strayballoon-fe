@@ -20,9 +20,9 @@ export default {
 </script>
 
 <template>
-  <div class='progress-map'>
-    <VIcon name='attendance'/>
-    <span class='student-avatar' :style="`left: ${offset}`"></span>
+  <div class='progress-map'><p class="progress-title">Progress Map</p>
+    <div class="bar"></div>
+    <span class='student-avatar' :style="`left: ${offset}`">&#9675;</span>
   </div>
 </template>
 
@@ -33,8 +33,22 @@ export default {
   width: 36.5rem;
   position: relative
 }
-
+.progress-title {
+  padding-left: 50px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+}
 .student-avatar {
   position: absolute;
+  font-size: 50px;
+}
+.bar{
+  position: absolute;
+  width: 540px;
+  height: 0px;
+  color: #6F6F6F;
+  border: 9px solid #6F6F6F;
 }
 </style>
