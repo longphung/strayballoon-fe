@@ -18,13 +18,16 @@ export default {
 
 <template>
   <span class="student-avatar" :style="`left: ${offset}%`">
-    avatar
-<!--    TODO: Akhmad to fill with student avatar-->
+<!--    TODO: Akhmad to fill with student avatar(Completed)-->
   </span>
 </template>
 
 <style scoped>
 .student-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: rgba(151, 151, 151, 1);
+  border-radius: 100px;
   position: absolute;
   top: calc(100% + 0.3125rem);
 }
