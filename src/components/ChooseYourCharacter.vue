@@ -1,46 +1,53 @@
 <script>
-import VIcon from './VIcon.vue' 
+import VIcon from './VIcon.vue';
+import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
   name: 'ChooseYourCharacter',
   components: {
     VIcon,
   },
+  emits: ['changeStage'],
+  methods: {
+    handleNextButtonClick() {
+      this.$emit('changeStage', GAME_STAGE.IN_GAME);
+    },
+  },
 };
 </script>
 
 <template>
   <section class="choose">
-      <div class="setting">
-        <router-link to="/">
-          <VIcon name="setting" />
-        </router-link>
-      </div>
-      <div class="help">
-        <router-link to="/">
-          <VIcon name="notification" />
-        </router-link>
-      </div>
+    <div class="setting">
+      <router-link to="/">
+        <VIcon name="setting" />
+      </router-link>
+    </div>
+    <div class="help">
+      <router-link to="/">
+        <VIcon name="notification" />
+      </router-link>
+    </div>
   </section>
   <section class="game-container">
-  <div class="choose-character">
-    <p class="p1">CHOOSE YOUR CHARACTER</p>
-  </div>
-  <div class="character">
-    <div class="character-image"></div>
-  </div>
-  <div class="characters">
-    <div class="character-1"></div>
-    <div class="character-2"></div>
-    <div class="character-3"></div>
-    <div class="character-4"></div>
-    <div class="character-5"></div>
-  </div>
-  <div class="next">
-    <p class="p1">NEXT</p>
-  </div>
-</section>
-  </template>
+    <div class="choose-character">
+      <p class="p1">CHOOSE YOUR CHARACTER</p>
+    </div>
+    <div class="character">
+      <div class="character-image"></div>
+    </div>
+    <div class="characters">
+      <div class="character-1"></div>
+      <div class="character-2"></div>
+      <div class="character-3"></div>
+      <div class="character-4"></div>
+      <div class="character-5"></div>
+    </div>
+    <div class="next">
+      <button type="button" class="p1" @click="handleNextButtonClick">NEXT</button>
+    </div>
+  </section>
+</template>
 
 <style scoped>
 .choose {
@@ -48,7 +55,7 @@ export default {
   grid-template-columns: auto auto;
 }
 
-.game-container{
+.game-container {
   display: grid;
   grid-template-rows: 15% 40% 30% 15%;
 }
@@ -91,7 +98,7 @@ export default {
   height: 15.6rem;
   border: solid 0.3rem;
   border-radius: 8rem;
-} 
+}
 
 .characters {
   display: grid;
@@ -123,7 +130,6 @@ export default {
   border: solid 0.3rem;
   border-radius: 8rem;
 }
-
 
 .next {
   display: grid;

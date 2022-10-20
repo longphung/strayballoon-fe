@@ -3,7 +3,7 @@ import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
 
-const GAME_STAGE = {
+export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
   IN_GAME: 'InGame',
   SCORE_PAGE: 'ScorePage',
@@ -36,12 +36,17 @@ export default {
       }
     },
   },
+  methods: {
+    handleChangeStage(nextStage) {
+      this.gameStage = nextStage;
+    },
+  },
 };
 </script>
 
 <template>
   <section class="game-page" :class="gamePageBackgroundClass">
-    <component :is="gameStage" />
+    <component :is="gameStage" @change-stage="handleChangeStage" />
   </section>
 </template>
 
@@ -55,7 +60,7 @@ export default {
 }
 
 .choose-your-character {
-  background-image: url("game-background.jpg");
+  background-image: url('game-background.jpg');
   background-size: contain;
 }
 

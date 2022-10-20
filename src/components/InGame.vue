@@ -1,11 +1,18 @@
 <script>
-import VIcon from './VIcon.vue' 
+import VIcon from './VIcon.vue'
+import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
   name: 'InGame',
   components: {
     VIcon,
   },
+emits: ['changeStage'],
+  methods: {
+    handleAnswerClick() {
+      this.$emit('changeStage', GAME_STAGE.SCORE_PAGE)
+    }
+  }
 };
 </script>
 <template>
@@ -30,14 +37,14 @@ export default {
   <div class="choose-character">
     <div class="bar"></div>
   </div>
-  <div class="character">
+  <div class="question">
     <div class="character-image"></div>
   </div>
-  <div class="characters">
-    <div class="character-1"></div>
-    <div class="character-2"></div>
-    <div class="character-3"></div>
-    <div class="character-4"></div>
+  <div class="answers-wrapper">
+    <button class="answer-1" @click='handleAnswerClick'></button>
+    <button class="answer-2" @click='handleAnswerClick'></button>
+    <button class="answer-3" @click='handleAnswerClick'></button>
+    <button class="answer-4" @click='handleAnswerClick'></button>
   </div>
 </section>
   </template>
@@ -102,7 +109,7 @@ export default {
   height: 14rem;
   border: solid 0.3rem;
   border-radius: 1rem;
-} 
+}
 
 .characters {
   background-color: #80cfea;
@@ -135,4 +142,3 @@ export default {
   border-radius: 0.3rem;
 }
 </style>
-
