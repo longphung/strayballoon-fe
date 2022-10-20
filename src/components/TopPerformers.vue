@@ -12,8 +12,8 @@ export default {
 <template>
   <div class="top-performers">
     <p class="performance-title">Top Performers</p>
-    <VIcon name="crown" />
-    <div class="perf">
+    <div class="perf1">
+      <VIcon class="crown" name="crown" />
       <div class="icon-perf"></div>
       <div class="perf-text">
         <div class="text1"></div>
@@ -52,6 +52,23 @@ export default {
   margin-bottom: 4rem;
 }
 
+.perf1 {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  margin: 1rem 1rem 0.5rem;
+  height: 4rem;
+  background: rgba(151, 151, 151, 1);
+  border-radius: 10px;
+  gap: 30px;
+}
+.crown{
+  position: absolute;
+  left: calc(100% - 1.2rem);
+  bottom: calc(100% - 0.6rem);
+  font-size: 2rem;
+}
 .perf {
   display: flex;
   align-items: center;
