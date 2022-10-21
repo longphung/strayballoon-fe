@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 // Icons css
 import './assets/strayballoon/style.css';
 // Global
-import './global.css';
+import './global.scss';
 import App from './App.vue';
 import router from './router';
 
