@@ -1,5 +1,5 @@
 <script>
-import VIcon from './VIcon.vue' 
+import VIcon from './VIcon.vue';
 
 export default {
   name: 'ScorePage',
@@ -10,50 +10,47 @@ export default {
 </script>
 <template>
   <section class="choose">
-      <div class="setting">
-        <router-link to="/">
-          <VIcon name="setting" />
-        </router-link>
-      </div>
-      <div class="chosen-character">
-      </div>
-      <div class="help">
-        <router-link to="/">
-          <VIcon name="notification" />
-        </router-link>
-      </div>
+    <div class="setting">
+      <router-link to="/">
+        <VIcon name="setting" />
+      </router-link>
+    </div>
+    <div class="chosen-character"></div>
+    <div class="help">
+      <router-link to="/">
+        <VIcon name="notification" />
+      </router-link>
+    </div>
   </section>
   <section class="ingame-container">
-  <div class="choose-character">
-    <div class="bar"></div>
-  </div>
-  <div class="character">
-    <div class="character-image"></div>
-  </div>
-  <div class="characters">
-    <div class="character-1"></div>
-    <div class="character-2"></div>
-    <div class="character-3"></div>
-    <div class="character-4"></div>
-  </div>
-</section>
-  </template>
+    <div class="choose-character">
+      <p class="p1">WELL DONE</p>
+    </div>
+    <div class="players">
+      <div class="player-1"></div>
+      <div class="player-2"></div>
+      <div class="player-3"></div>
+      <div class="player-4"></div>
+      <div class="player-5"></div>
+    </div>
+    <div class="exit">
+      <button type="button" class="p1">EXIT</button>
+    </div>
+  </section>
+</template>
 
 <style scoped>
 .choose {
-  background: #80cfea;
   display: grid;
   grid-template-columns: auto auto auto;
 }
 
-.ingame-container{
-  background: red;
+.ingame-container {
   display: grid;
-  grid-template-rows: 15% 42.5% 42.5%;
+  grid-template-rows: 15% 70% 15%;
 }
 
 .setting {
-  background: #80cfea;
   place-self: center start;
   padding-top: 2rem;
   padding-left: 6rem;
@@ -61,7 +58,6 @@ export default {
 }
 
 .help {
-  background-color: #80cfea;
   padding-top: 2rem;
   place-self: center end;
   padding-right: 6rem;
@@ -69,70 +65,64 @@ export default {
 }
 
 .chosen-character {
-  background-color: #80cfea;
   place-self: center;
   font-size: 4rem;
-  border: solid 0.1rem;
-  border-radius: rem;
+  border: solid 0.2rem;
+  border-radius: 3rem;
   width: 6rem;
   height: 6rem;
 }
 
 .choose-character {
-  background-color: #80cfea;
   display: grid;
   justify-content: space-around;
   align-content: space-between;
 }
 
-.bar {
-  background-color: #F8C033;
-  width: 26rem;
-  height: 2rem;
-  border-radius: 2.5rem;
-}
-
-.character {
-  background-color: #80cfea;
+.exit {
   display: grid;
   justify-content: space-around;
   align-content: center;
 }
-.character-image {
-  width: 35rem;
-  height: 14rem;
-  border: solid 0.3rem;
-  border-radius: 1rem;
-} 
 
-.characters {
-  background-color: #80cfea;
+.players {
   display: grid;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 6rem;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 0.5rem;
+  justify-content: space-around;
+  align-content: center;
 }
 
-.character-1 {
+.player-1 {
+  border: solid 0.3rem;
+  border-radius: 0.3rem;
+  width: 30rem;
+}
+.player-2 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-2 {
+.player-3 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-3 {
+.player-4 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-4 {
+.player-5 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
+}
+
+.p1 {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0.5rem;
+  border: solid;
+  border-radius: 1rem;
 }
 </style>
-

@@ -51,19 +51,16 @@ emits: ['changeStage'],
 
 <style scoped>
 .choose {
-  background: #80cfea;
   display: grid;
   grid-template-columns: auto auto auto;
 }
 
 .ingame-container{
-  background: red;
   display: grid;
   grid-template-rows: 15% 42.5% 42.5%;
 }
 
 .setting {
-  background: #80cfea;
   place-self: center start;
   padding-top: 2rem;
   padding-left: 6rem;
@@ -71,7 +68,6 @@ emits: ['changeStage'],
 }
 
 .help {
-  background-color: #80cfea;
   padding-top: 2rem;
   place-self: center end;
   padding-right: 6rem;
@@ -79,13 +75,11 @@ emits: ['changeStage'],
 }
 
 .pause {
-  background-color: #80cfea;
   place-self: center;
   font-size: 4rem;
 }
 
 .choose-character {
-  background-color: #80cfea;
   display: grid;
   justify-content: space-around;
   align-content: space-between;
@@ -98,8 +92,7 @@ emits: ['changeStage'],
   border-radius: 2.5rem;
 }
 
-.character {
-  background-color: #80cfea;
+.question {
   display: grid;
   justify-content: space-around;
   align-content: center;
@@ -111,8 +104,7 @@ emits: ['changeStage'],
   border-radius: 1rem;
 }
 
-.characters {
-  background-color: #80cfea;
+.answers-wrapper {
   display: grid;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -122,22 +114,22 @@ emits: ['changeStage'],
   gap: 6rem;
 }
 
-.character-1 {
+.answer-1 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-2 {
+.answer-2 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-3 {
+.answer-3 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }
 
-.character-4 {
+.answer-4 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
 }

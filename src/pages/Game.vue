@@ -65,8 +65,12 @@ export default {
 }
 
 .in-game {
+  background-image: url('in-game-background.png');
+  background-size: contain;
 }
 
 .score-page {
+  background-image: url('in-game-background.png');
+  background-size: contain;
 }
 </style>

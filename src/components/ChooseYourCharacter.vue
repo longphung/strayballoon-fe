@@ -94,41 +94,70 @@ export default {
   align-content: center;
 }
 .character-image {
+  background-image: url('character3.png');
+  background-size: contain;
+  border: solid 0.3rem white;
+  background-color:antiquewhite;
   width: 16rem;
   height: 15.6rem;
-  border: solid 0.3rem;
   border-radius: 8rem;
 }
 
 .characters {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 6rem;
+  gap: 5rem;
+  justify-self: center;
 }
 
 .character-1 {
-  border: solid 0.3rem;
+  border: solid 0.3rem white;
   border-radius: 12rem;
+  background-image: url('character1.png');
+  background-size: contain;
+  background-color:antiquewhite;
+  height: 10rem;
+  width: 10rem;
 }
 
 .character-2 {
-  border: solid 0.3rem;
-  border-radius: 8rem;
+  border: solid 0.3rem white;
+  border-radius: 12rem;
+  background-image: url('character2.png');
+  background-size: contain;
+  background-color:antiquewhite;
+  height: 10rem;
+  width: 10rem;
 }
 
 .character-3 {
-  border: solid 0.3rem;
-  border-radius: 8rem;
+  border: solid 0.3rem white;
+  border-radius: 12rem;
+  background-image: url('character3.png');
+  background-size: contain;
+  background-color:antiquewhite;
+  height: 10rem;
+  width: 10rem;
 }
 
 .character-4 {
-  border: solid 0.3rem;
-  border-radius: 8rem;
+  border: solid 0.3rem white;
+  border-radius: 12rem;
+  background-image: url('character4.png');
+  background-size: contain;
+  background-color:antiquewhite;
+  height: 10rem;
+  width: 10rem;
 }
 
 .character-5 {
-  border: solid 0.3rem;
-  border-radius: 8rem;
+  border: solid 0.3rem white;
+  border-radius: 12rem;
+  background-image: url('3.png');
+  background-size: contain;
+  background-color:antiquewhite;
+  height: 10rem;
+  width: 10rem;
 }
 
 .next {
