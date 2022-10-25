@@ -1,6 +1,5 @@
 <script>
-import VIcon from './VIcon.vue'
-import { GAME_STAGE } from '../pages/Game.vue';
+import VIcon from './VIcon.vue';
 
 export default {
   name: 'InGame',
@@ -30,55 +29,63 @@ export default {
           description: 'Incorrect Answer',
           isCorrect: false,
         },
-      ]
+      ],
+      // We only allow people to select answer once
+      answerSelected: false,
     };
   },
-// emits: ['changeStage'],
+  // emits: ['changeStage'],
   methods: {
-    handleAnswerClick(answerDetails) {
-      console.log(answerDetails);
-      if (answerDetails.isCorrect) {
-//          Toggle the answer green
-         const answerIndex = this.state.answers.findIndex(({ id }) => id === answerDetails.id);
-         this.state.answers[answerIndex].clicked = true;
+    handleAnswerClick(answer) {
+      if (this.answerSelected) {
+        return;
       }
-//       this.$emit('changeStage', GAME_STAGE.SCORE_PAGE)
-    }
-  }
+      this.answerSelected = true;
+      // eslint-disable-next-line no-param-reassign
+      answer.clicked = true;
+    },
+  },
 };
 </script>
 <template>
   <section class="choose">
-      <div class="setting">
-        <router-link class="hand-stop" to="/">
-          <VIcon name="setting" />
-        </router-link>
-      </div>
-      <div class="pause">
-        <router-link class="hand-stop" to="/">
-          <VIcon name="pause" />
-        </router-link>
-      </div>
-      <div class="help">
-        <router-link class="hand-stop" to="/">
-          <VIcon name="notification" />
-        </router-link>
-      </div>
+    <div class="setting">
+      <router-link class="hand-stop" to="/">
+        <VIcon name="setting" />
+      </router-link>
+    </div>
+    <div class="pause">
+      <router-link class="hand-stop" to="/">
+        <VIcon name="pause" />
+      </router-link>
+    </div>
+    <div class="help">
+      <router-link class="hand-stop" to="/">
+        <VIcon name="notification" />
+      </router-link>
+    </div>
   </section>
   <section class="ingame-container">
-  <div class="choose-character">
-    <div class="bar"></div>
-  </div>
-  <div class="question">
-    <div class="question-part"></div>
-  </div>
-  <div class="answers-wrapper">
-    <button v-for="answer in answers" :key="answer.id" class="answer" :class="{'green': answer.clicked}" @click="handleAnswerClick(answer)">
-      {{ answer.description }}
-    </button>
-  </div>
-</section>
-  </template>
+    <div class="choose-character">
+      <div class="bar"></div>
+    </div>
+    <div class="question">
+      <div class="question-part"></div>
+    </div>
+    <div class="answers-wrapper">
+      <button
+        v-for="answer in answers"
+        :key="answer.id"
+        type="button"
+        class="answer"
+        :class="{ green: answer.clicked && answer.isCorrect, red: answer.clicked && !answer.isCorrect }"
+        @click="handleAnswerClick(answer)"
+      >
+        {{ answer.description }}
+      </button>
+    </div>
+  </section>
+</template>
 
 <style scoped>
 .choose {
@@ -86,7 +93,17 @@ export default {
   grid-template-columns: auto auto auto;
 }
 
-.ingame-container{
+.green {
+  background-color: green;
+  color: white;
+}
+
+.red {
+  background-color: red;
+  color: white;
+}
+
+.ingame-container {
   display: grid;
   grid-template-rows: 15% 42.5% 42.5%;
 }
@@ -122,7 +139,7 @@ export default {
 }
 
 .bar {
-  background-color: #F8C033;
+  background-color: #f8c033;
   width: 26rem;
   height: 2rem;
   border-radius: 2.5rem;
@@ -157,6 +174,6 @@ export default {
   justify-self: center;
   border: solid 0.3rem;
   border-radius: 0.3rem;
-  width:35rem;
+  width: 35rem;
 }
 </style>
