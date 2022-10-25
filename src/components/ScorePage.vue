@@ -11,13 +11,13 @@ export default {
 <template>
   <section class="choose">
     <div class="setting">
-      <router-link to="/">
+      <router-link class="hand-stop" to="/">
         <VIcon name="setting" />
       </router-link>
     </div>
     <div class="chosen-character"></div>
     <div class="help">
-      <router-link to="/">
+      <router-link class="hand-stop" to="/">
         <VIcon name="notification" />
       </router-link>
     </div>
@@ -34,7 +34,7 @@ export default {
       <div class="player-5"></div>
     </div>
     <div class="exit">
-      <button type="button" class="p1">EXIT</button>
+      <button type="button" class="p2 btn btn-danger">EXIT</button>
     </div>
   </section>
 </template>
@@ -97,32 +97,50 @@ export default {
   border: solid 0.3rem;
   border-radius: 0.3rem;
   width: 30rem;
+  background-color: white;
 }
+
+.hand-stop {
+  text-decoration: none;
+  color: orangered;
+}
+
 .player-2 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
+  background-color: white;
 }
 
 .player-3 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
+  background-color: white;
 }
 
 .player-4 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
+  background-color: white;
 }
 
 .player-5 {
   border: solid 0.3rem;
   border-radius: 0.3rem;
+  background-color: white;
 }
 
 .p1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin: 0;
-  padding: 0.5rem;
-  border: solid;
+  padding: 0.3rem;
+  color: aliceblue;
+  border: solid white;
   border-radius: 1rem;
+  background-color: #198754;
+}
+
+.p2 {
+  font-size: 2.5rem;
+  margin: 0;
 }
 </style>

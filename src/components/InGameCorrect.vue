@@ -3,46 +3,14 @@ import VIcon from './VIcon.vue'
 import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
-  name: 'InGame',
+  name: 'InGameCorrect',
   components: {
     VIcon,
   },
-  data() {
-    return {
-      answers: [
-        {
-          id: '1',
-          description: 'Incorrect Answer',
-          isCorrect: false,
-        },
-        {
-          id: '2',
-          description: 'Correct Answer',
-          isCorrect: true,
-        },
-        {
-          id: '3',
-          description: 'Incorrect Answer',
-          isCorrect: false,
-        },
-        {
-          id: '4',
-          description: 'Incorrect Answer',
-          isCorrect: false,
-        },
-      ]
-    };
-  },
-// emits: ['changeStage'],
+emits: ['changeStage'],
   methods: {
-    handleAnswerClick(answerDetails) {
-      console.log(answerDetails);
-      if (answerDetails.isCorrect) {
-//          Toggle the answer green
-         const answerIndex = this.state.answers.findIndex(({ id }) => id === answerDetails.id);
-         this.state.answers[answerIndex].clicked = true;
-      }
-//       this.$emit('changeStage', GAME_STAGE.SCORE_PAGE)
+    handleAnswerClick() {
+      this.$emit('changeStage', GAME_STAGE.SCORE_PAGE)
     }
   }
 };
@@ -73,9 +41,10 @@ export default {
     <div class="question-part"></div>
   </div>
   <div class="answers-wrapper">
-    <button v-for="answer in answers" :key="answer.id" class="answer" :class="{'green': answer.clicked}" @click="handleAnswerClick(answer)">
-      {{ answer.description }}
-    </button>
+    <button class="answer-1" @click='handleAnswerClick'></button>
+    <button class="answer-2" @click='handleAnswerClick'></button>
+    <button class="answer-3" @click='handleAnswerClick'></button>
+    <button class="answer-4" @click='handleAnswerClick'></button>
   </div>
 </section>
   </template>
@@ -153,10 +122,19 @@ export default {
   gap: 2rem;
 }
 
-.answer {
+.answer-1 {
   justify-self: center;
   border: solid 0.3rem;
   border-radius: 0.3rem;
   width:35rem;
 }
+
+.answer-2 {
+  justify-self: center;
+  border: solid 0.3rem;
+  border-radius: 0.3rem;
+  width:35rem;
+}
+
+
 </style>
