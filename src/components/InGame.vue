@@ -1,11 +1,13 @@
 <script>
 import VIcon from './VIcon.vue';
+import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
   name: 'InGame',
   components: {
     VIcon,
   },
+  emits: ['changeStage'],
   data() {
     return {
       answers: [
@@ -34,6 +36,7 @@ export default {
       answerSelected: false,
     };
   },
+
   // emits: ['changeStage'],
   methods: {
     handleAnswerClick(answer) {
@@ -43,6 +46,9 @@ export default {
       this.answerSelected = true;
       // eslint-disable-next-line no-param-reassign
       answer.clicked = true;
+    },
+    handleNextButtonClick() {
+      this.$emit('changeStage', GAME_STAGE.SCORE_PAGE);
     },
   },
 };
@@ -66,11 +72,17 @@ export default {
     </div>
   </section>
   <section class="ingame-container">
-    <div class="choose-character">
+    <div class="timer">
       <div class="bar"></div>
+      <div class="stopwatch" to="/">
+        <VIcon name="stopwatch" />
+      </div>
     </div>
     <div class="question">
       <div class="question-part"></div>
+      <div v-if="answerSelected">
+        <div class="feedback">Well done</div>
+      </div>
     </div>
     <div class="answers-wrapper">
       <button
@@ -82,6 +94,11 @@ export default {
         @click="handleAnswerClick(answer)"
       >
         {{ answer.description }}
+      </button>
+    </div>
+    <div class="next">
+      <button type="button" class="p1 btn btn-success" :disabled="!answerSelected" @click="handleNextButtonClick">
+        NEXT QUESTION
       </button>
     </div>
   </section>
@@ -105,7 +122,7 @@ export default {
 
 .ingame-container {
   display: grid;
-  grid-template-rows: 15% 42.5% 42.5%;
+  grid-template-rows: 8% 40% 40% 12%;
 }
 
 .setting {
@@ -132,30 +149,71 @@ export default {
   color: orangered;
 }
 
-.choose-character {
+.timer {
   display: grid;
+  grid-template-columns: 63.5% 36.5%;
   justify-content: space-around;
-  align-content: space-between;
+  align-content: center;
 }
 
 .bar {
   background-color: #f8c033;
   width: 26rem;
-  height: 2rem;
   border-radius: 2.5rem;
+  display: grid;
+  justify-self: end;
+}
+
+.stopwatch {
+  font-size: 2rem;
+  text-decoration: none;
+  color: orangered;
 }
 
 .question {
   display: grid;
   justify-content: space-around;
   align-content: center;
+  grid-template-columns: 68% 32%;
 }
 .question-part {
+  display: grid;
   width: 35rem;
-  height: 14rem;
+  height: 12rem;
   border: solid 0.3rem;
   border-radius: 1rem;
   background-color: white;
+  justify-self: end;
+}
+
+.feedback {
+  display: grid;
+  justify-self: center;
+  background-color: #1e90ff ;
+  position: relative;
+  font-size: 4rem;
+  margin: 4rem;
+  line-height: 2rem;
+  width: 25rem;
+  border-radius: 40px;
+  padding: 24px;
+  text-align: center;
+  color: white;
+}
+
+.feedback:before {
+  display: grid;
+  justify-self: center;
+  content: '';
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 24px solid #1e90ff;
+  border-right: 12px solid transparent;
+  border-top: 12px solid #1e90ff;
+  border-bottom: 20px solid transparent;
+  left: 32px;
+  bottom: -24px;
 }
 
 .answers-wrapper {
@@ -167,7 +225,7 @@ export default {
   grid-template-rows: 1fr 1fr;
   justify-content: space-around;
   align-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .answer {
@@ -175,5 +233,15 @@ export default {
   border: solid 0.3rem;
   border-radius: 0.3rem;
   width: 35rem;
+}
+.next {
+  display: grid;
+  justify-content: space-around;
+  align-self: center;
+}
+.p1 {
+  font-size: 2rem;
+  border: solid;
+  border-radius: 0.5rem;
 }
 </style>

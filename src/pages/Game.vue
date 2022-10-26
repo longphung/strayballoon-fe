@@ -1,13 +1,11 @@
 <script>
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
-import InGameCorrect from '../components/InGameCorrect.vue';
 import ScorePage from '../components/ScorePage.vue';
 
 export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
   IN_GAME: 'InGame',
-  IN_GAME_CORRECT: 'InGameCorrect',
   SCORE_PAGE: 'ScorePage',
 };
 
@@ -16,7 +14,6 @@ export default {
   components: {
     ChooseYourCharacter,
     InGame,
-    InGameCorrect,
     ScorePage,
   },
   data() {
@@ -32,8 +29,6 @@ export default {
           return 'choose-your-character';
         case GAME_STAGE.IN_GAME:
           return 'in-game';
-        case GAME_STAGE.IN_GAME_CORRECT:
-          return 'in-game-correct';
         case GAME_STAGE.SCORE_PAGE:
           return 'score-page';
         default:

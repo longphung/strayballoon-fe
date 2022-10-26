@@ -1,31 +1,26 @@
 <script>
 import VIcon from './VIcon.vue';
 import { GAME_STAGE } from '../pages/Game.vue';
-import char1 from '../assets/character1.png';
-import char2 from '../assets/character2.png';
-import char3 from '../assets/character3.png';
-import char4 from '../assets/character4.png';
-import char5 from '../assets/character5.png';
 
 export default {
-  
+
   name: 'ChooseYourCharacter',
   components: {
     VIcon,
   },
-  emits: ['changeStage'],
+  emits: ['changeStage','currentChar'],
   data() {
     return {
-      char1,
-      char2,
-      char3,
-      char4,
-      char5,
+      currentChar: 'character1.png',
     };
   },
   methods: {
     handleNextButtonClick() {
       this.$emit('changeStage', GAME_STAGE.IN_GAME);
+    },
+    handleCharacterButtonClick(character) {
+      this.$emit('currentChar',character);
+      this.currentChar = character; 
     },
   },
 };
@@ -50,25 +45,29 @@ export default {
       <p class="p2">CHOOSE YOUR CHARACTER</p>
     </div>
     <div class="character">
-      <div class="character-image"><img src="../assets/character3.png" /></div>
+      <div class="character-image"><img :src="currentChar" /></div>
     </div>
     <div class="characters">
-      <div class="character-1">
-        <img src="../assets/character1.png" />
-        <VIcon class="check" name="checkbox-checked" />
-      </div>
-      <div class="character-2">
-        <img src="../assets/character2.png" />
-      </div>
-      <div class="character-3">
-        <img src="../assets/character3.png" />
-      </div>
-      <div class="character-4">
-        <img src="../assets/character4.png" />
-      </div>
-      <div class="character-5">
-        <img src="../assets/character5.png" />
-      </div>
+      <button class="character-1" @click="handleCharacterButtonClick('character1.png')">
+        <img src="character1.png" />
+        <VIcon v-if="currentChar === 'character1.png'" class="check" name="checkbox-checked" />
+      </button>
+      <button class="character-2" @click="handleCharacterButtonClick('character2.png')">
+        <img src="character2.png" />
+        <VIcon v-if="currentChar === 'character2.png'" class="check" name="checkbox-checked" />
+      </button>
+      <button class="character-3" @click="handleCharacterButtonClick('character3.png')">
+        <img src="character3.png" />
+        <VIcon v-if="currentChar === 'character3.png'" class="check" name="checkbox-checked" />
+      </button>
+      <button class="character-4" @click="handleCharacterButtonClick('character4.png')">
+        <img src="character4.png" />
+        <VIcon v-if="currentChar === 'character4.png'" class="check" name="checkbox-checked" />
+      </button>
+      <button class="character-5" @click="handleCharacterButtonClick('character5.png')">
+        <img src="character5.png" />
+        <VIcon v-if="currentChar === 'character5.png'" class="check" name="checkbox-checked" />
+      </button>
     </div>
     <div class="next">
       <button type="button" class="p1 btn btn-success" @click="handleNextButtonClick">NEXT</button>
@@ -165,13 +164,13 @@ export default {
   top: calc(100% - 0.6rem);
   font-size: 2rem;
 }
-.check { 
+.check {
   position: absolute;
   left: calc(100% - 1.2rem);
   top: calc(100% - 0.6rem);
-  font-size: 2rem;
-  color:white;
-  background-color: green;
+  font-size: 2.5rem;
+  color:green;
+  background-color: white;
 }
 
 .character-2 {
@@ -181,6 +180,7 @@ export default {
   background-color:antiquewhite;
   height: 10rem;
   width: 10rem;
+  position: relative;
 }
 
 .character-3 {
@@ -190,7 +190,9 @@ export default {
   background-color:antiquewhite;
   height: 10rem;
   width: 10rem;
+  position: relative;
 }
+
 
 .character-4 {
   border: solid 0.3rem white;
@@ -199,6 +201,7 @@ export default {
   background-color:antiquewhite;
   height: 10rem;
   width: 10rem;
+  position: relative;
 }
 
 .character-5 {
@@ -211,15 +214,15 @@ export default {
   position: relative;
 }
 
-img { 
+img {
   width: 100%;
 }
 
-
 .next {
   display: grid;
-  justify-content: space-around;
   align-self: center;
+  padding-right: 20rem;
+  padding-left: 20rem;
   padding-top: 0.2rem;
 }
 </style>
