@@ -6,7 +6,18 @@ export default {
   provide() {
     return {
       userData: computed(() => this.userData),
+      setUserData: (userData) => {
+        this.userData = userData;
+      },
     };
+  },
+  created() {
+    const storedUserData = window.sessionStorage.getItem('userData');
+    try {
+      this.userData = JSON.parse(storedUserData);
+    } catch (e) {
+      console.error(e);
+    }
   },
   data() {
     return {

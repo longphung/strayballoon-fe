@@ -9,6 +9,7 @@
 <script>
 import HeaderTab from '../components/HeaderTab.vue';
 import SideBar from '../components/SideBar.vue';
+import authGuard from '../mixins/authGuard';
 
 export default {
   name: 'DashboardLayout',
@@ -16,6 +17,7 @@ export default {
     HeaderTab,
     SideBar,
   },
+  mixins: [authGuard],
 };
 </script>
 

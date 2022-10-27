@@ -4,7 +4,7 @@ import { useToast } from 'vue-toastification';
 
 export default {
   name: 'LoginPage',
-  inject: ['userData'],
+  inject: ['userData', 'setUserData'],
   emits: ['login'],
   setup() {
     const toast = useToast();
@@ -38,7 +38,14 @@ export default {
           password: form.password.value,
         });
         this.toast.success('Login success');
-        this.$emit('login', result.data);
+        window.sessionStorage.setItem('userData', JSON.stringify(result.data));
+        this.setUserData(result.data);
+        if (result.data.groups.includes('instructors')) {
+          this.$router.push('/');
+        }
+        if (result.data.groups.includes('students')) {
+          this.$router.push('/game');
+        }
       } catch (e) {
         console.error(e);
         this.toast.error('Login failed');

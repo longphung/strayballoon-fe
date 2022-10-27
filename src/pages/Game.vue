@@ -2,6 +2,7 @@
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
+import authGuard from '../mixins/authGuard';
 
 export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
@@ -16,6 +17,7 @@ export default {
     InGame,
     ScorePage,
   },
+  mixins: [authGuard],
   data() {
     return {
       //       This will replaced with data from the backend
