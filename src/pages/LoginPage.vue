@@ -1,6 +1,9 @@
 <script>
+import axios  from 'axios';
+
 export default {
   name: 'LoginPage',
+  inject: ['userToken'],
   data() {
     return {
       showPassword: false,
@@ -15,10 +18,20 @@ export default {
     },
     passwordFieldType() {
       if (this.showPassword) {
-        return 'text'
+        return 'text';
       }
-      return 'password'
-    }
+      return 'password';
+    },
+  },
+  methods: {
+    async handleLogin(event) {
+      const form = event.currentTarget;
+      const result = await axios.post('/api/auth/', {
+        username: form.username.value,
+        password: form.password.value,
+      });
+      console.log(result);
+    },
   },
 };
 </script>
@@ -28,7 +41,7 @@ export default {
     <div class="card">
       <h1 class="title">Strayballoon</h1>
 
-      <form class="form">
+      <form class="form" @submit.prevent="handleLogin">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
 
@@ -39,9 +52,17 @@ export default {
           <label for="password" class="form-label">Password</label>
 
           <div class="password">
-            <input id="password" :type="passwordFieldType" class="form-control" placeholder="Password..." name="password" />
+            <input
+              id="password"
+              :type="passwordFieldType"
+              class="form-control"
+              placeholder="Password..."
+              name="password"
+            />
 
-            <button type="button" class="password__helper btn btn-link" @click='showPassword = !showPassword'>{{ passwordHelperText }}</button>
+            <button type="button" class="password__helper btn btn-link" @click="showPassword = !showPassword">
+              {{ passwordHelperText }}
+            </button>
           </div>
         </div>
 
