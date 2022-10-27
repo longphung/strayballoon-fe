@@ -11,7 +11,7 @@ export default {
   emits: ['changeStage','currentChar'],
   data() {
     return {
-      currentChar: 'character1.png',
+      currentChar: '/character1.png',
     };
   },
   methods: {
@@ -48,25 +48,25 @@ export default {
       <div class="character-image"><img :src="currentChar" /></div>
     </div>
     <div class="characters">
-      <button class="character-1" @click="handleCharacterButtonClick('character1.png')">
-        <img src="character1.png" />
-        <VIcon v-if="currentChar === 'character1.png'" class="check" name="checkbox-checked" />
+      <button class="character-1" @click="handleCharacterButtonClick('/character1.png')">
+        <img src="/character1.png" />
+        <VIcon v-if="currentChar === '/character1.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-2" @click="handleCharacterButtonClick('character2.png')">
-        <img src="character2.png" />
-        <VIcon v-if="currentChar === 'character2.png'" class="check" name="checkbox-checked" />
+      <button class="character-2" @click="handleCharacterButtonClick('/character2.png')">
+        <img src="/character2.png" />
+        <VIcon v-if="currentChar === '/character2.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-3" @click="handleCharacterButtonClick('character3.png')">
-        <img src="character3.png" />
-        <VIcon v-if="currentChar === 'character3.png'" class="check" name="checkbox-checked" />
+      <button class="character-3" @click="handleCharacterButtonClick('/character3.png')">
+        <img src="/character3.png" />
+        <VIcon v-if="currentChar === '/character3.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-4" @click="handleCharacterButtonClick('character4.png')">
-        <img src="character4.png" />
-        <VIcon v-if="currentChar === 'character4.png'" class="check" name="checkbox-checked" />
+      <button class="character-4" @click="handleCharacterButtonClick('/character4.png')">
+        <img src="/character4.png" />
+        <VIcon v-if="currentChar === '/character4.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-5" @click="handleCharacterButtonClick('character5.png')">
-        <img src="character5.png" />
-        <VIcon v-if="currentChar === 'character5.png'" class="check" name="checkbox-checked" />
+      <button class="character-5" @click="handleCharacterButtonClick('/character5.png')">
+        <img src="/character5.png" />
+        <VIcon v-if="currentChar === '/character5.png'" class="check" name="checkbox-checked" />
       </button>
     </div>
     <div class="next">
