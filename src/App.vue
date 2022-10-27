@@ -5,19 +5,24 @@ export default {
   name: 'AppContainer',
   provide() {
     return {
-      userToken: computed(() => this.userToken),
+      userData: computed(() => this.userData),
     };
   },
   data() {
     return {
-      userToken: '',
+      userData: {},
     };
+  },
+  methods: {
+    handleLogin(userData) {
+      this.userData = userData;
+    },
   },
 };
 </script>
 
 <template>
-  <router-view></router-view>
+  <router-view @login="handleLogin"></router-view>
 </template>
 
 <style scoped></style>

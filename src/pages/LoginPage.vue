@@ -1,9 +1,15 @@
 <script>
-import axios  from 'axios';
+import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
 export default {
   name: 'LoginPage',
-  inject: ['userToken'],
+  inject: ['userData'],
+  emits: ['login'],
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       showPassword: false,
@@ -26,11 +32,17 @@ export default {
   methods: {
     async handleLogin(event) {
       const form = event.currentTarget;
-      const result = await axios.post('/api/auth/', {
-        username: form.username.value,
-        password: form.password.value,
-      });
-      console.log(result);
+      try {
+        const result = await axios.post('/api/auth/', {
+          username: form.username.value,
+          password: form.password.value,
+        });
+        this.toast.success('Login success');
+        this.$emit('login', result.data);
+      } catch (e) {
+        console.error(e);
+        this.toast.error('Login failed');
+      }
     },
   },
 };
