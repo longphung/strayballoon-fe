@@ -26,10 +26,11 @@ export default {
         <VIcon name="attendance" />
         Attendance
       </li>
-
       <li class="sidebar__item">
+        <router-link class="report-link" to="/report">
         <VIcon name="report" />
         Report
+      </router-link>
       </li>
     </ul>
   </aside>
@@ -52,6 +53,23 @@ export default {
 .sidebar__item {
   color: white;
   margin-top: 4.375rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  & i {
+    color: #d9d9d9;
+    font-size: 2.1875rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.report-link {
+  color: white;
+  margin-top: 4.375rem;
+  text-decoration: none;
+  text-align: center;
 
   &:first-child {
     margin-top: 0;
