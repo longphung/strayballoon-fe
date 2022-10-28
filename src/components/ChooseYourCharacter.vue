@@ -26,6 +26,7 @@ export default {
       });
     },
     handleCharacterButtonClick(character) {
+      this.currentChar = character;
       this.setSession({
         ...this.session,
         character,
@@ -44,7 +45,6 @@ export default {
 
 <template>
   <section class="choose">
-    
     <div class="help">
       <router-link class="hand-stop" to="/">
         <VIcon name="hand-stop" />
@@ -113,7 +113,6 @@ export default {
 .game-container {
   display: grid;
   grid-template-rows: 15% 40% 30% 15%;
-  
 }
 
 .link {
@@ -143,17 +142,16 @@ export default {
 }
 
 .p1 {
-  font-size: 2rem; 
+  font-size: 2rem;
   max-width: 370px;
   width: 15%;
   border: solid;
   border-radius: 1rem;
   display: flex;
-  align-items: center; 
-  margin:auto;
+  align-items: center;
+  margin: auto;
   margin-top: 10px;
   justify-content: center;
-  
 }
 .p2 {
   font-size: 2rem;
@@ -259,22 +257,17 @@ img {
   text-align: center;
 }
 
-
-
 .label {
   color: white;
   font-weight: bold;
 }
-<<<<<<< Updated upstream
-=======
-
 
 .container-sm {
   font-size: 1.1rem;
   display: flex;
-  align-items: center; 
-  margin:auto;
-  
+  align-items: center;
+  margin: auto;
+
   justify-content: center;
 }
 
@@ -284,11 +277,10 @@ img {
   background: #0b5ed7;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   text-align: center;
-  width:10%;
+  width: 10%;
   margin-top: 40px;
   padding-top: 9px;
   padding-bottom: 9px;
-   
 }
 
 .col-sm-10 {
@@ -297,12 +289,8 @@ img {
   margin-top: 40px;
 }
 
-
 .form-control {
   padding-top: 10px;
   padding-bottom: 10px;
-  
 }
-
->>>>>>> Stashed changes
 </style>
