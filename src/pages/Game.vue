@@ -1,9 +1,13 @@
 <script>
+import { computed } from 'vue';
+
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
 import authGuard from '../mixins/authGuard';
 import roleGuard from '../mixins/roleGuard';
+import { baseWs } from '../features';
+import { useToast } from 'vue-toastification';
 
 export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
@@ -19,11 +23,22 @@ export default {
     ScorePage,
   },
   mixins: [authGuard, roleGuard('students')],
+  inject: ['userData'],
+  provide() {
+    return {
+      session: computed(() => this.session),
+      setSession: (newSession) => {
+        this.session = newSession;
+      },
+    };
+  },
   data() {
     return {
       // This will be replaced with data from the backend
       gameStage: GAME_STAGE.CHOOSE_CHARACTER,
       session: null,
+      ws: null,
+      toast: {},
     };
   },
   computed: {
@@ -38,6 +53,40 @@ export default {
         default:
           return '';
       }
+    },
+  },
+  created() {
+    this.toast = useToast();
+  },
+  watch: {
+    session(val, previousVal) {
+      if (!val.sessionId) {
+        return;
+      }
+      if (val.sessionId === previousVal.sessionId) {
+        return;
+      }
+      if (previousVal.sessionId) {
+        this.ws.close();
+      }
+      this.ws = new WebSocket(`${baseWs}/session/${val.sessionId}?token=${this.userData.token}`);
+      this.ws.onmessage = (event) => {
+        const { data: rawData } = event;
+        try {
+          const data = JSON.parse(rawData);
+          switch (data.type) {
+            case 'session_join':
+              break;
+            default:
+              break;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      this.ws.onopen = () => {
+        console.log(`You have joined session ${val.sessionId}`);
+      };
     },
   },
   methods: {

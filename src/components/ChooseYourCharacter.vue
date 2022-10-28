@@ -1,30 +1,43 @@
 <script>
+import { debounce } from 'lodash';
 import VIcon from './VIcon.vue';
 import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
-
   name: 'ChooseYourCharacter',
   components: {
     VIcon,
   },
-  emits: ['changeStage','currentChar'],
+  inject: ['session', 'setSession'],
+  emits: ['changeStage', 'currentChar'],
   data() {
     return {
       currentChar: '/character1.png',
+      sessionId: 0,
     };
+  },
+  mounted() {
+    this.handleCharacterButtonClick(this.currentChar);
   },
   methods: {
     handleNextButtonClick() {
       this.$emit('changeStage', GAME_STAGE.IN_GAME);
     },
     handleCharacterButtonClick(character) {
-      this.$emit('currentChar',character);
-      this.currentChar = character; 
+      this.setSession({
+        ...this.session,
+        character,
+      });
     },
+    // eslint-disable-next-line func-names
+    handleInputChange: debounce(function (event) {
+      this.setSession({
+        ...this.session,
+        sessionId: event.target.value,
+      });
+    }, 250),
   },
 };
-
 </script>
 
 <template>
@@ -69,6 +82,21 @@ export default {
         <VIcon v-if="currentChar === '/character5.png'" class="check" name="checkbox-checked" />
       </button>
     </div>
+    <!-- TODO: restyle this -->
+    <form class="container-sm mb-3 row m-auto">
+      <label for="session-id" class="col-sm-2 col-form-label label">Session ID</label>
+      <div class="col-sm-10">
+        <input
+          id="session-id"
+          type="text"
+          class="form-control"
+          placeholder="Session ID..."
+          name="sessionId"
+          @input="handleInputChange"
+        />
+      </div>
+    </form>
+
     <div class="next">
       <button type="button" class="p1 btn btn-success" @click="handleNextButtonClick">NEXT</button>
     </div>
@@ -118,7 +146,7 @@ export default {
   border: solid;
   border-radius: 1rem;
 }
-.p2{
+.p2 {
   font-size: 2rem;
   margin: 0;
   padding: 0.5rem;
@@ -135,7 +163,7 @@ export default {
 .character-image {
   background-size: contain;
   border: solid 0.3rem white;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   width: 16rem;
   height: 15.6rem;
   border-radius: 8rem;
@@ -152,13 +180,13 @@ export default {
   border: solid 0.3rem white;
   border-radius: 12rem;
   background-size: contain;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   height: 10rem;
   width: 10rem;
   position: relative;
 }
 
-.crown{
+.crown {
   position: absolute;
   left: calc(100% - 1.2rem);
   top: calc(100% - 0.6rem);
@@ -169,7 +197,7 @@ export default {
   left: calc(100% - 1.2rem);
   top: calc(100% - 0.6rem);
   font-size: 2.5rem;
-  color:green;
+  color: green;
   background-color: white;
 }
 
@@ -177,7 +205,7 @@ export default {
   border: solid 0.3rem white;
   border-radius: 12rem;
   background-size: contain;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   height: 10rem;
   width: 10rem;
   position: relative;
@@ -187,18 +215,17 @@ export default {
   border: solid 0.3rem white;
   border-radius: 12rem;
   background-size: contain;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   height: 10rem;
   width: 10rem;
   position: relative;
 }
 
-
 .character-4 {
   border: solid 0.3rem white;
   border-radius: 12rem;
   background-size: contain;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   height: 10rem;
   width: 10rem;
   position: relative;
@@ -208,7 +235,7 @@ export default {
   border: solid 0.3rem white;
   border-radius: 12rem;
   background-size: contain;
-  background-color:antiquewhite;
+  background-color: antiquewhite;
   height: 10rem;
   width: 10rem;
   position: relative;
@@ -224,5 +251,10 @@ img {
   padding-right: 20rem;
   padding-left: 20rem;
   padding-top: 0.2rem;
+}
+
+.label {
+  color: white;
+  font-weight: bold;
 }
 </style>
