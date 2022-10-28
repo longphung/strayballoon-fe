@@ -44,11 +44,7 @@ export default {
 
 <template>
   <section class="choose">
-    <div class="link">
-      <router-link class="hand-stop" to="/">
-        <VIcon name="setting" />
-      </router-link>
-    </div>
+    
     <div class="help">
       <router-link class="hand-stop" to="/">
         <VIcon name="hand-stop" />
@@ -117,6 +113,7 @@ export default {
 .game-container {
   display: grid;
   grid-template-rows: 15% 40% 30% 15%;
+  
 }
 
 .link {
@@ -128,7 +125,8 @@ export default {
 
 .help {
   padding-top: 2rem;
-  place-self: center end;
+  position: absolute;
+  right: 0;
   padding-right: 6rem;
   font-size: 4rem;
 }
@@ -145,11 +143,17 @@ export default {
 }
 
 .p1 {
-  font-size: 2rem;
-  margin: 0;
-  padding: 0.5rem;
+  font-size: 2rem; 
+  max-width: 370px;
+  width: 15%;
   border: solid;
   border-radius: 1rem;
+  display: flex;
+  align-items: center; 
+  margin:auto;
+  margin-top: 10px;
+  justify-content: center;
+  
 }
 .p2 {
   font-size: 2rem;
@@ -175,6 +179,7 @@ export default {
 }
 
 .characters {
+  margin-top: 2em;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 5rem;
@@ -251,15 +256,53 @@ img {
 }
 
 .next {
-  display: grid;
-  align-self: center;
-  padding-right: 20rem;
-  padding-left: 20rem;
-  padding-top: 0.2rem;
+  text-align: center;
 }
+
+
 
 .label {
   color: white;
   font-weight: bold;
 }
+<<<<<<< Updated upstream
+=======
+
+
+.container-sm {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center; 
+  margin:auto;
+  
+  justify-content: center;
+}
+
+.col-sm-2 {
+  border-radius: 10px;
+  border: 2px solid white;
+  background: #0b5ed7;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  text-align: center;
+  width:10%;
+  margin-top: 40px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+   
+}
+
+.col-sm-10 {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  width: 20%;
+  margin-top: 40px;
+}
+
+
+.form-control {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+}
+
+>>>>>>> Stashed changes
 </style>
