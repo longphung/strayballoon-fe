@@ -36,8 +36,6 @@ export default {
       answerSelected: false,
     };
   },
-
-  // emits: ['changeStage'],
   methods: {
     handleAnswerClick(answer) {
       if (this.answerSelected) {
@@ -48,7 +46,9 @@ export default {
       answer.clicked = true;
     },
     handleNextButtonClick() {
-      this.$emit('changeStage', GAME_STAGE.SCORE_PAGE);
+      this.$emit('changeStage', {
+        nextStage: GAME_STAGE.SCORE_PAGE,
+      });
     },
   },
 };
@@ -189,7 +189,7 @@ export default {
 .feedback {
   display: grid;
   justify-self: center;
-  background-color: #1e90ff ;
+  background-color: #1e90ff;
   position: relative;
   font-size: 4rem;
   margin: 4rem;

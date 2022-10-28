@@ -21,7 +21,9 @@ export default {
   },
   methods: {
     handleNextButtonClick() {
-      this.$emit('changeStage', GAME_STAGE.IN_GAME);
+      this.$emit('changeStage', {
+        nextStage: GAME_STAGE.IN_GAME,
+      });
     },
     handleCharacterButtonClick(character) {
       this.setSession({
@@ -105,7 +107,6 @@ export default {
 
 <style scoped>
 .session-id {
-
 }
 
 .choose {

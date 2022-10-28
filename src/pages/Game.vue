@@ -1,7 +1,7 @@
 <script>
 import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
-
+import axios from 'axios';
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
@@ -39,6 +39,8 @@ export default {
       session: null,
       ws: null,
       toast: {},
+      axios: null,
+      questions: [],
     };
   },
   computed: {
@@ -66,7 +68,32 @@ export default {
       if (previousVal.sessionId) {
         this.ws.close();
       }
-      this.ws = new WebSocket(`${baseWs}/session/${val.sessionId}?token=${this.userData.token}`);
+      this.handleSocketConnection(val);
+    },
+  },
+  created() {
+    this.toast = useToast();
+  },
+  unmounted() {
+    this.ws.close();
+  },
+  methods: {
+    async handleChangeStage(data) {
+      const { nextStage } = data;
+      this.axios = axios.create({
+        headers: {
+          Authorization: `token ${this.userData.token}`,
+        },
+      });
+      await this.handleFetchQuestions();
+      this.gameStage = nextStage;
+    },
+    async handleFetchQuestions() {
+      const result = await this.axios.get('/api/questions');
+      this.questions = result.data;
+    },
+    handleSocketConnection(session) {
+      this.ws = new WebSocket(`${baseWs}/session/${session.sessionId}?token=${this.userData.token}`);
       this.ws.onmessage = (event) => {
         const { data: rawData } = event;
         try {
@@ -82,16 +109,8 @@ export default {
         }
       };
       this.ws.onopen = () => {
-        console.log(`You have joined session ${val.sessionId}`);
+        console.log(`You have joined session ${session.sessionId}`);
       };
-    },
-  },
-  created() {
-    this.toast = useToast();
-  },
-  methods: {
-    handleChangeStage(nextStage) {
-      this.gameStage = nextStage;
     },
   },
 };
