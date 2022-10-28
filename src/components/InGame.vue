@@ -69,6 +69,10 @@ export default {
         nextStage: GAME_STAGE.SCORE_PAGE,
       });
     },
+    selectedCorrectAnswer() {
+      const selectedAnswer = this.answers.find(({ clicked }) => clicked);
+      return selectedAnswer.is_correct;
+    },
   },
 };
 </script>
@@ -100,7 +104,15 @@ export default {
     <div class="question">
       <div class="question-part">{{ currentQuestion.description }}</div>
       <div v-if="answerSelected">
-        <div class="feedback">{{ currentQuestion.feedback ? currentQuestion.feedback : 'Well done!' }}</div>
+        <div class="feedback">
+          {{
+            currentQuestion.feedback
+              ? currentQuestion.feedback
+              : selectedCorrectAnswer()
+              ? 'Well done!'
+              : 'Better luck next time!'
+          }}
+        </div>
       </div>
     </div>
     <div class="answers-wrapper">
