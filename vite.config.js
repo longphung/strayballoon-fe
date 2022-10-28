@@ -13,12 +13,11 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://strayballoon.phungnnl.dev',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/ws': {
-        target: 'ws://localhost:8000',
+        target: 'wss://strayballoon.phungnnl.dev',
         changeOrigin: true,
       }
     },
