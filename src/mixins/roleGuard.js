@@ -2,7 +2,7 @@ import { useToast } from 'vue-toastification';
 
 const roleGuard = (role) => ({
   inject: ['userData'],
-  mounted() {
+  created() {
     const toast = useToast();
     if (!this.userData?.groups.includes(role)) {
       this.$router.push('/login');

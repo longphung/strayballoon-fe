@@ -1,6 +1,6 @@
 const authGuard = {
   inject: ['userData'],
-  mounted() {
+  created() {
     if (!this.userData?.token) {
       this.$router.push('/login');
     }
