@@ -1,7 +1,7 @@
 import axiosLibrary from 'axios';
 
 export const baseUrl = import.meta.env.VITE_BASE_URL;
-const isDev = import.meta.env.MODE;
+const isDev = import.meta.env.DEV;
 
 export const axios = axiosLibrary.create({
   baseURL: `${isDev ? 'http' : 'https'}://${baseUrl}`,
