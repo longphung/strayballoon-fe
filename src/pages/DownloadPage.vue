@@ -24,7 +24,7 @@ export default {
   background: white;
   border-radius: 1.25rem;
   width: 100%;
-  padding: 1.5rem;
+  padding: 1rem;
   display: grid;
   grid-template-columns: 15% 85%;
   gap: 1rem;
