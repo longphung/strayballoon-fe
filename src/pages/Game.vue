@@ -1,7 +1,7 @@
 <script>
 import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
-
+import axios from 'axios';
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
@@ -30,6 +30,7 @@ export default {
       setSession: (newSession) => {
         this.session = newSession;
       },
+      axios: computed(() => this.axios),
     };
   },
   data() {
@@ -39,6 +40,8 @@ export default {
       session: null,
       ws: null,
       toast: {},
+      axios: null,
+      questions: [],
     };
   },
   computed: {
@@ -66,7 +69,40 @@ export default {
       if (previousVal.sessionId) {
         this.ws.close();
       }
-      this.ws = new WebSocket(`${baseWs}/session/${val.sessionId}?token=${this.userData.token}`);
+      this.handleSocketConnection(val);
+    },
+  },
+  created() {
+    this.toast = useToast();
+  },
+  beforeUnmount() {
+    if (this.ws) {
+      this.ws.close();
+    }
+  },
+  methods: {
+    async handleChangeStage(data) {
+      try {
+        const { nextStage } = data;
+        this.axios = axios.create({
+          headers: {
+            Authorization: `token ${this.userData.token}`,
+          },
+        });
+        if (this.session.sessionId && this.ws) {
+          await this.handleFetchQuestions();
+          this.gameStage = nextStage;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async handleFetchQuestions() {
+      const result = await this.axios.get('/api/questions/');
+      this.questions = result.data;
+    },
+    handleSocketConnection(session) {
+      this.ws = new WebSocket(`${baseWs}/session/${session.sessionId}?token=${this.userData.token}`);
       this.ws.onmessage = (event) => {
         const { data: rawData } = event;
         try {
@@ -82,16 +118,8 @@ export default {
         }
       };
       this.ws.onopen = () => {
-        console.log(`You have joined session ${val.sessionId}`);
+        console.log(`You have joined session ${session.sessionId}`);
       };
-    },
-  },
-  created() {
-    this.toast = useToast();
-  },
-  methods: {
-    handleChangeStage(nextStage) {
-      this.gameStage = nextStage;
     },
   },
 };
@@ -99,7 +127,7 @@ export default {
 
 <template>
   <section class="game-page" :class="gamePageBackgroundClass">
-    <component :is="gameStage" @change-stage="handleChangeStage" />
+    <component :is="gameStage" :questions='questions' @change-stage="handleChangeStage" />
   </section>
 </template>
 
@@ -113,17 +141,17 @@ export default {
 }
 
 .choose-your-character {
-  background-image: url('game-background.jpg');
+  background-image: url(/game-background.jpg);
   background-size: contain;
 }
 
 .in-game {
-  background-image: url('in-game-background.png');
+  background-image: url(/in-game-background.png);
   background-size: contain;
 }
 
 .score-page {
-  background-image: url('in-game-background.png');
+  background-image: url(/in-game-background.png);
   background-size: contain;
 }
 </style>

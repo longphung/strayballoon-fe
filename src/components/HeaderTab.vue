@@ -4,7 +4,7 @@ import VIcon from './VIcon.vue';
 import SlideSwitch from './SlideSwitch.vue';
 
 export default {
-  name: 'HeaderTab',
+  name: 'HeaderTab', 
   components: {
     BreadCrumb,
     VIcon,

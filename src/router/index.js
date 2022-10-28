@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '../layouts/Dashboard.vue';
 import DashboardPage from '../pages/DashboardPage.vue';
+import ReportPage from '../pages/ReportPage.vue';
 import Game from '../pages/Game.vue';
 import LoginPage from '../pages/LoginPage.vue';
+import DownloadPage from '../pages/DownloadPage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,6 +17,15 @@ const router = createRouter({
           path: '/',
           component: DashboardPage,
         },
+        {
+          path: '/report',
+          component: ReportPage,
+        },
+        {
+          path: '/download',
+          component: DownloadPage,
+        },
+
       ],
     },
     {

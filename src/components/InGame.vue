@@ -7,37 +7,54 @@ export default {
   components: {
     VIcon,
   },
+  inject: ['axios'],
+  props: {
+    questions: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   emits: ['changeStage'],
   data() {
     return {
+      currentQuestion: this.questions[0],
       answers: [
         {
           id: '1',
-          description: 'Incorrect Answer',
-          isCorrect: false,
+          description: '',
+          is_correct: false,
         },
         {
           id: '2',
-          description: 'Correct Answer',
-          isCorrect: true,
+          description: '',
+          is_correct: true,
         },
         {
           id: '3',
-          description: 'Incorrect Answer',
-          isCorrect: false,
+          description: '',
+          is_correct: false,
         },
         {
           id: '4',
-          description: 'Incorrect Answer',
-          isCorrect: false,
+          description: '',
+          is_correct: false,
         },
       ],
       // We only allow people to select answer once
       answerSelected: false,
     };
   },
-
-  // emits: ['changeStage'],
+  async mounted() {
+    this.answers = (
+      await this.axios.get('/api/answers-of-question/', {
+        params: {
+          id: this.currentQuestion.id,
+        },
+      })
+    ).data.answers;
+  },
   methods: {
     handleAnswerClick(answer) {
       if (this.answerSelected) {
@@ -48,7 +65,13 @@ export default {
       answer.clicked = true;
     },
     handleNextButtonClick() {
-      this.$emit('changeStage', GAME_STAGE.SCORE_PAGE);
+      this.$emit('changeStage', {
+        nextStage: GAME_STAGE.SCORE_PAGE,
+      });
+    },
+    selectedCorrectAnswer() {
+      const selectedAnswer = this.answers.find(({ clicked }) => clicked);
+      return selectedAnswer.is_correct;
     },
   },
 };
@@ -79,9 +102,17 @@ export default {
       </div>
     </div>
     <div class="question">
-      <div class="question-part"></div>
+      <div class="question-part">{{ currentQuestion.description }}</div>
       <div v-if="answerSelected">
-        <div class="feedback">Well done</div>
+        <div class="feedback">
+          {{
+            currentQuestion.feedback
+              ? currentQuestion.feedback
+              : selectedCorrectAnswer()
+              ? 'Well done!'
+              : 'Better luck next time!'
+          }}
+        </div>
       </div>
     </div>
     <div class="answers-wrapper">
@@ -90,7 +121,7 @@ export default {
         :key="answer.id"
         type="button"
         class="answer"
-        :class="{ green: answer.clicked && answer.isCorrect, red: answer.clicked && !answer.isCorrect }"
+        :class="{ green: answer.clicked && answer.is_correct, red: answer.clicked && !answer.is_correct }"
         @click="handleAnswerClick(answer)"
       >
         {{ answer.description }}
@@ -189,7 +220,7 @@ export default {
 .feedback {
   display: grid;
   justify-self: center;
-  background-color: #1e90ff ;
+  background-color: #1e90ff;
   position: relative;
   font-size: 4rem;
   margin: 4rem;
