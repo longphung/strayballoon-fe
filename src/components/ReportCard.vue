@@ -12,11 +12,11 @@ export default {
           <div class="table1">Assessed Criteria</div>
           <div class="table1">Total Marks</div>
           <div class="table1">Obtained Marks</div>
-          <div class="table2">5</div>
+          <div class="table2">1</div>
           <div class="table2">6</div>
           <div class="table2">7</div>
           <div class="table2">8</div>
-          <div class="table2">11</div>
+          <div class="table2">2</div>
           <div class="table2">22</div>
           <div class="table2">33</div>
           <div class="table2">44</div>
@@ -44,7 +44,7 @@ export default {
     </div>
     <div class="comment">ADDITIONAL COMMENTS:</div>
     <div class="save">
-      <button class="pdf">Save as PDF</button>
+      <router-link class="pdf-link" to="/download"><button class="pdf">Save as PDF</button></router-link>
       <button class="edit">Edit Report</button>
       <button class="generate">Generate PDF</button>
     </div>

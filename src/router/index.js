@@ -4,6 +4,7 @@ import DashboardPage from '../pages/DashboardPage.vue';
 import ReportPage from '../pages/ReportPage.vue';
 import Game from '../pages/Game.vue';
 import LoginPage from '../pages/LoginPage.vue';
+import DownloadPage from '../pages/DownloadPage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -19,6 +20,10 @@ const router = createRouter({
         {
           path: '/report',
           component: ReportPage,
+        },
+        {
+          path: '/download',
+          component: DownloadPage,
         },
 
       ],
