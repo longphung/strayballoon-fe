@@ -30,6 +30,7 @@ export default {
       setSession: (newSession) => {
         this.session = newSession;
       },
+      axios: computed(() => this.axios),
     };
   },
   data() {
@@ -74,22 +75,30 @@ export default {
   created() {
     this.toast = useToast();
   },
-  unmounted() {
-    this.ws.close();
+  beforeUnmount() {
+    if (this.ws) {
+      this.ws.close();
+    }
   },
   methods: {
     async handleChangeStage(data) {
-      const { nextStage } = data;
-      this.axios = axios.create({
-        headers: {
-          Authorization: `token ${this.userData.token}`,
-        },
-      });
-      await this.handleFetchQuestions();
-      this.gameStage = nextStage;
+      try {
+        const { nextStage } = data;
+        this.axios = axios.create({
+          headers: {
+            Authorization: `token ${this.userData.token}`,
+          },
+        });
+        if (this.session.sessionId && this.ws) {
+          await this.handleFetchQuestions();
+          this.gameStage = nextStage;
+        }
+      } catch (e) {
+        console.error(e);
+      }
     },
     async handleFetchQuestions() {
-      const result = await this.axios.get('/api/questions');
+      const result = await this.axios.get('/api/questions/');
       this.questions = result.data;
     },
     handleSocketConnection(session) {
@@ -118,7 +127,7 @@ export default {
 
 <template>
   <section class="game-page" :class="gamePageBackgroundClass">
-    <component :is="gameStage" @change-stage="handleChangeStage" />
+    <component :is="gameStage" :questions='questions' @change-stage="handleChangeStage" />
   </section>
 </template>
 

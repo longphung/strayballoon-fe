@@ -34,7 +34,7 @@ export default {
     }
     this.handleConnection();
   },
-  unmounted() {
+  beforeUnmount() {
     if (this.ws) {
       this.ws.close();
     }
