@@ -3,14 +3,19 @@ import Chart from 'chart.js/auto';
 
 export default {
   name: 'StudentMetrics',
+  data() {
+    return {
+      myChart1: null,
+    };
+  },
   mounted() {
-    function chart1(id) {
-      const ctx = document.getElementById(id);
+    const chart1 = (id) => {
+      const chartEl = document.getElementById(id);
 
       const qs = [16, 20]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
-      const myChart = new Chart(ctx, {
+      this.myChart1 = new Chart(chartEl, {
         type: 'doughnut',
         data: {
           labels: questionsLabels,
@@ -22,19 +27,16 @@ export default {
             },
           ],
         },
-
         options: {
-          rotation: 0.75 * Math.PI,
-          circumference: 1.5 * Math.PI,
+          responsive: false,
         },
         // plugin for inner text visualisation
         plugins: [
           {
             id: 'text',
-            beforeDraw: (chart, a, b) => {
-              const width = chart.width;
-              const height = chart.height;
-              const ctx = chart.ctx;
+            // beforeDraw: (chart, a, b) => {
+            beforeDraw: (chart) => {
+              const { width, height, ctx } = chart;
 
               ctx.restore();
               const fontSize = (height / 160).toFixed(2);
@@ -42,9 +44,9 @@ export default {
               ctx.font = `${fontSize}em sans-serif`;
               ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = 'XXX' + '/' + 'XXX';
+              const text = 'xxx/xxx';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.5;
+              const textY = height / 1.75;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -52,9 +54,14 @@ export default {
           },
         ],
       });
-    }
+    };
 
     chart1('myChart');
+  },
+  beforeUnmount() {
+    if (this.myChart1) {
+      this.myChart1.destroy();
+    }
   },
 };
 </script>
@@ -64,7 +71,7 @@ export default {
     <div class="metrics">
       <div class="metrics-heading">TOTAL NUMBER OF PROBLEMS SOLVED</div>
       <div class="numbers">
-        <canvas id="myChart" width="200" height="50"></canvas>
+        <canvas id="myChart" class="m-auto" width="250" height="250"></canvas>
       </div>
     </div>
     <div class="metrics">
@@ -100,12 +107,10 @@ export default {
   border-radius: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
 }
 
 .metrics {
   display: grid;
-  grid-template-rows: 17% 83%;
   gap: 0.2rem;
   align-items: stretch;
   color: white;
@@ -118,12 +123,16 @@ export default {
   background-color: #446894;
   font-size: 1rem;
   border-radius: 0.5rem;
-  padding: 0.2rem;
+  padding: 0.5rem;
 }
 
 .numbers {
   background-color: #479ac8;
   border-radius: 0.6rem;
   margin: 0.2rem;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
