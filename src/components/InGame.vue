@@ -211,6 +211,9 @@ export default {
   display: grid;
   width: 35rem;
   height: 12rem;
+  font-size: 1.6rem;
+  justify-content: center;
+  align-content: center;
   border: solid 0.3rem;
   border-radius: 1rem;
   background-color: white;
@@ -222,10 +225,10 @@ export default {
   justify-self: center;
   background-color: #1e90ff;
   position: relative;
-  font-size: 4rem;
-  margin: 4rem;
+  font-size: 2rem;
+  margin: 2rem;
   line-height: 2rem;
-  width: 25rem;
+  width: 20rem;
   border-radius: 40px;
   padding: 24px;
   text-align: center;
@@ -264,6 +267,7 @@ export default {
   border: solid 0.3rem;
   border-radius: 0.3rem;
   width: 35rem;
+  font-size: 1.5rem;
 }
 .next {
   display: grid;
