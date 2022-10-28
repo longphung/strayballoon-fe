@@ -36,11 +36,15 @@ export default {
           username: form.username.value,
           password: form.password.value,
         });
-        const user = await axios.get(`/api/users/${result.data.userId}`);
+        const user = await axios.get(`/api/users/${result.data.userId}/`, {
+          headers: {
+            Authorization: `token ${result.data.token}`
+          }
+        });
         this.toast.success('Login success');
         const userData = {
           ...result.data,
-          userName: user.username,
+          userName: user.data.username,
         };
         window.sessionStorage.setItem('userData', JSON.stringify(userData));
         this.setUserData(userData);
