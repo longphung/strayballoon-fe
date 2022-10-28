@@ -1,5 +1,6 @@
 <script>
 import { computed } from 'vue';
+import { useToast } from 'vue-toastification';
 
 import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
@@ -7,7 +8,6 @@ import ScorePage from '../components/ScorePage.vue';
 import authGuard from '../mixins/authGuard';
 import roleGuard from '../mixins/roleGuard';
 import { baseWs } from '../features';
-import { useToast } from 'vue-toastification';
 
 export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
@@ -55,9 +55,6 @@ export default {
       }
     },
   },
-  created() {
-    this.toast = useToast();
-  },
   watch: {
     session(val, previousVal) {
       if (!val.sessionId) {
@@ -88,6 +85,9 @@ export default {
         console.log(`You have joined session ${val.sessionId}`);
       };
     },
+  },
+  created() {
+    this.toast = useToast();
   },
   methods: {
     handleChangeStage(nextStage) {
