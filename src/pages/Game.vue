@@ -3,6 +3,7 @@ import ChooseYourCharacter from '../components/ChooseYourCharacter.vue';
 import InGame from '../components/InGame.vue';
 import ScorePage from '../components/ScorePage.vue';
 import authGuard from '../mixins/authGuard';
+import roleGuard from '../mixins/roleGuard';
 
 export const GAME_STAGE = {
   CHOOSE_CHARACTER: 'ChooseYourCharacter',
@@ -17,11 +18,12 @@ export default {
     InGame,
     ScorePage,
   },
-  mixins: [authGuard],
+  mixins: [authGuard, roleGuard('students')],
   data() {
     return {
-      //       This will replaced with data from the backend
+      // This will be replaced with data from the backend
       gameStage: GAME_STAGE.CHOOSE_CHARACTER,
+      session: null,
     };
   },
   computed: {

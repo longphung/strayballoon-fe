@@ -10,6 +10,7 @@
 import HeaderTab from '../components/HeaderTab.vue';
 import SideBar from '../components/SideBar.vue';
 import authGuard from '../mixins/authGuard';
+import roleGuard from '../mixins/roleGuard';
 
 export default {
   name: 'DashboardLayout',
@@ -17,7 +18,7 @@ export default {
     HeaderTab,
     SideBar,
   },
-  mixins: [authGuard],
+  mixins: [authGuard, roleGuard('instructors')],
 };
 </script>
 

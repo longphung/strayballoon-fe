@@ -72,7 +72,7 @@ export default {
         }
       };
       this.ws.onopen = () => {
-        this.toast.success(`Successfully connected to session ${this.userData.userId}`);
+        console.log(`Successfully connected to session ${this.userData.userId}`);
       };
     },
   },
