@@ -83,7 +83,7 @@ export default {
       </button>
     </div>
     <!-- TODO: restyle this -->
-    <form class="container-sm mb-3 row m-auto">
+    <form class="container-sm mb-3 row m-auto session-id">
       <label for="session-id" class="col-sm-2 col-form-label label">Session ID</label>
       <div class="col-sm-10">
         <input
@@ -104,6 +104,10 @@ export default {
 </template>
 
 <style scoped>
+.session-id {
+
+}
+
 .choose {
   display: grid;
   grid-template-columns: auto auto;
