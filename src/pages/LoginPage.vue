@@ -5,7 +5,6 @@ import { useToast } from 'vue-toastification';
 export default {
   name: 'LoginPage',
   inject: ['userData', 'setUserData'],
-  emits: ['login'],
   setup() {
     const toast = useToast();
     return { toast };

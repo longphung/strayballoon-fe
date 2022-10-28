@@ -11,6 +11,11 @@ export default {
       },
     };
   },
+  data() {
+    return {
+      userData: {},
+    };
+  },
   created() {
     const storedUserData = window.sessionStorage.getItem('userData');
     try {
@@ -18,11 +23,6 @@ export default {
     } catch (e) {
       console.error(e);
     }
-  },
-  data() {
-    return {
-      userData: {},
-    };
   },
   methods: {
     handleLogin(userData) {
@@ -33,7 +33,7 @@ export default {
 </script>
 
 <template>
-  <router-view @login="handleLogin"></router-view>
+  <router-view></router-view>
 </template>
 
 <style scoped></style>

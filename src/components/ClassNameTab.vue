@@ -1,16 +1,19 @@
 <script>
 export default {
-  name: 'ClassNameTab'
+  name: 'ClassNameTab',
+  emits: ['sessionStart'],
 };
 </script>
 
 <template>
-  <div class='class-name'>class name</div>
+  <div class="class-name">
+    <button class="btn btn-primary" @click="$emit('sessionStart')">Start Session</button>
+  </div>
 </template>
 
 <style scoped>
 .class-name {
-  background: #D9D9D9;
+  background: #d9d9d9;
   border-radius: 20px;
   grid-column-start: span 2;
 }

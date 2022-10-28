@@ -1,4 +1,7 @@
 <script>
+import { useToast } from 'vue-toastification';
+
+import { baseWs } from '../features';
 import ClassNameTab from '../components/ClassNameTab.vue';
 import TimerTab from '../components/TimerTab.vue';
 import TopPerformers from '../components/TopPerformers.vue';
@@ -14,12 +17,71 @@ export default {
     ProgressMap,
     HelpRequest,
   },
+  inject: ['userData'],
+  data() {
+    return {
+      // websocket connection
+      ws: null,
+      sessionInfo: {},
+      toast: {},
+      students: [],
+    };
+  },
+  created() {
+    this.toast = useToast();
+    if (!this.userData?.userId) {
+      return;
+    }
+    this.handleConnection();
+  },
+  unmounted() {
+    if (this.ws) {
+      this.ws.close();
+    }
+  },
+  methods: {
+    handleSessionStart() {
+      // this.ws.send(JSON.stringify({
+      //   "session_status": "started",
+      // }))
+    },
+    handleConnection() {
+      this.ws = new WebSocket(`${baseWs}/session/${this.userData.userId}?token=${this.userData.token}`);
+      this.ws.onmessage = (event) => {
+        const { data: rawData } = event;
+        try {
+          const data = JSON.parse(rawData);
+          switch (data.type) {
+            case 'session_info_instructor':
+              this.sessionInfo = {
+                status: data.sessionStatus,
+                id: data.sessionId,
+              };
+              break;
+            case 'session_join':
+              if (data.role.includes('students')) {
+                this.toast.info(`Student ${data.username} joined the session.`);
+                this.students.push(data.username);
+              }
+              break;
+            default:
+              break;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      this.ws.onopen = () => {
+        this.toast.success(`Successfully connected to session ${this.userData.userId}`);
+      };
+    },
+  },
 };
 </script>
 
 <template>
   <section class="dashboard-page">
-    <ClassNameTab />
+    <ClassNameTab @session-start="handleSessionStart" />
     <TimerTab />
     <TopPerformers />
     <ProgressMap />
