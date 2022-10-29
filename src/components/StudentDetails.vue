@@ -38,7 +38,6 @@ export default {
   width: 5rem;
   height: 4rem;
   border-radius: 4rem;
-
 }
 
 .details {
