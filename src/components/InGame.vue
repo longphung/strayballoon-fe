@@ -93,8 +93,10 @@ export default {
     } else {
       this.toast.success("You have answered all the questions! Let's go to score page!");
       window.setTimeout(() => {
-        this.handleNextButtonClick();
-      }, 5000);
+        this.$emit('changeStage', {
+          nextStage: GAME_STAGE.SCORE_PAGE,
+        });
+      }, 0);
     }
   },
   methods: {
