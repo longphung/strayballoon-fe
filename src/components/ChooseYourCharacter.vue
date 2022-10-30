@@ -9,6 +9,9 @@ export default {
     VIcon,
   },
   inject: ['session', 'setSession'],
+  props: {
+    disabledNext: Boolean,
+  },
   emits: ['changeStage', 'currentChar'],
   data() {
     return {
@@ -96,7 +99,7 @@ export default {
     </form>
 
     <div class="next">
-      <button type="button" class="p1 btn btn-success" @click="handleNextButtonClick">NEXT</button>
+      <button type="button" class="p1 btn btn-success" :disabled="disabledNext" @click="handleNextButtonClick">NEXT</button>
     </div>
   </section>
 </template>

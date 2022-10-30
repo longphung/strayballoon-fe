@@ -44,6 +44,7 @@ export default {
       axios: null,
       questions: [],
       sessionProgress: null,
+      disabledNext: true,
     };
   },
   computed: {
@@ -60,12 +61,19 @@ export default {
       }
     },
     propsToPass() {
-      if (this.gameStage === GAME_STAGE.IN_GAME) {
-        return {
-          questions: this.questions,
-        };
+      switch (this.gameStage) {
+        case GAME_STAGE.CHOOSE_CHARACTER:
+          return {
+            disabledNext: this.disabledNext || !this.sessionProgress,
+          };
+        case GAME_STAGE.IN_GAME:
+          return {
+            questions: this.questions,
+            sessionProgress: this.sessionProgress,
+          };
+        default:
+          return {};
       }
-      return {};
     },
   },
   watch: {
@@ -96,6 +104,10 @@ export default {
     async handleChangeStage(data) {
       try {
         const { nextStage } = data;
+        if (nextStage === GAME_STAGE.SCORE_PAGE) {
+          this.gameStage = nextStage;
+          return;
+        }
         if (this.session.sessionId && this.ws) {
           await this.handleFetchQuestions();
           this.gameStage = nextStage;
@@ -138,6 +150,7 @@ export default {
       };
       this.ws.onopen = () => {
         this.toast.success(`You have joined session ${session.sessionId}`);
+        this.disabledNext = false;
       };
     },
   },

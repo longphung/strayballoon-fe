@@ -1,4 +1,5 @@
 <script>
+import { useToast } from 'vue-toastification';
 import VIcon from './VIcon.vue';
 import { GAME_STAGE } from '../pages/Game.vue';
 
@@ -15,10 +16,17 @@ export default {
         return [];
       },
     },
+    sessionProgress: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   emits: ['changeStage'],
   data() {
     return {
+      toast: null,
       currentQuestionIndex: 0,
       answers: [
         {
@@ -45,30 +53,49 @@ export default {
       // We only allow people to select answer once
       answerSelected: false,
       timer: new Date(),
+      questionsToUse: [],
     };
   },
   computed: {
     currentQuestion() {
-      return this.questions[this.currentQuestionIndex];
+      return this.questionsToUse[this.currentQuestionIndex];
     },
   },
   watch: {
-    currentQuestionIndex(val, previousVal) {
+    async currentQuestionIndex(val, previousVal) {
       if (!val || val === previousVal) {
         return;
       }
       // Reset timer when student is taking on new question
       this.timer = new Date();
+      this.answers = (
+        await this.axios.get('/api/answers-of-question/', {
+          params: {
+            id: this.questions[val].id,
+          },
+        })
+      ).data.answers;
     },
   },
   async mounted() {
-    this.answers = (
-      await this.axios.get('/api/answers-of-question/', {
-        params: {
-          id: this.currentQuestion.id,
-        },
-      })
-    ).data.answers;
+    this.toast = useToast();
+    this.questionsToUse = this.questions.filter(
+      ({ id }) => !this.sessionProgress.progress.some(({ question_id }) => id === question_id)
+    );
+    if (this.questionsToUse.length) {
+      this.answers = (
+        await this.axios.get('/api/answers-of-question/', {
+          params: {
+            id: this.questionsToUse[this.currentQuestionIndex]?.id,
+          },
+        })
+      ).data.answers;
+    } else {
+      this.toast.success("You have answered all the questions! Let's go to score page!");
+      window.setTimeout(() => {
+        this.handleNextButtonClick();
+      }, 5000);
+    }
   },
   methods: {
     handleAnswerClick(answer) {
@@ -87,16 +114,21 @@ export default {
             question_status: 'completed',
             answer_taken: answer.id,
             time_taken: (now.getTime() - this.timer.getTime()) / 1000,
-            // TODO: get session_progress_id
-            session_progress_id: 1,
+            session_progress_id: this.sessionProgress.id,
           },
         })
       );
     },
     handleNextButtonClick() {
-      this.$emit('changeStage', {
-        nextStage: GAME_STAGE.SCORE_PAGE,
-      });
+      // if last question then go to score page
+      if (this.currentQuestionIndex === this.questions.length - 1) {
+        this.$emit('changeStage', {
+          nextStage: GAME_STAGE.SCORE_PAGE,
+        });
+        return;
+      }
+      this.currentQuestionIndex += 1;
+      this.answerSelected = false;
     },
     selectedCorrectAnswer() {
       const selectedAnswer = this.answers.find(({ clicked }) => clicked);
@@ -131,7 +163,7 @@ export default {
       </div>
     </div>
     <div class="question">
-      <div class="question-part">{{ currentQuestion.description }}</div>
+      <div class="question-part">{{ currentQuestion?.description }}</div>
       <div v-if="answerSelected">
         <div class="feedback">
           {{
