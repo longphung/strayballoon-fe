@@ -28,7 +28,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
@@ -75,7 +77,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
@@ -121,7 +125,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
@@ -168,7 +174,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
@@ -214,7 +222,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
@@ -261,7 +271,9 @@ export default {
           ],
         },
         options: {
-          responsive: false,
+             rotation: .75 * Math.PI
+             ,
+             circumference: 1.5 * Math.PI,
         },
         // plugin for inner text visualisation
         plugins: [
