@@ -13,14 +13,18 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target:
+          import.meta.env.VITE_CONNECT_STAGING !== 'false'
+            ? 'http://localhost:8000'
+            : 'https://strayballoon.phungnnl.dev',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       '/ws': {
-        target: 'ws://localhost:8000',
+        target:
+          import.meta.env.VITE_CONNECT_STAGING !== 'false' ? 'ws://localhost:8000' : 'wss://strayballoon.phungnnl.dev',
         changeOrigin: true,
-      }
+      },
     },
   },
 });
