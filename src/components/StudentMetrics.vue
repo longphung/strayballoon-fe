@@ -9,6 +9,10 @@ export default {
     };
   },
   mounted() {
+    const options = {
+      rotation: 225,
+      circumference: 270,
+    };
     const chart1 = (id) => {
       const chartEl = document.getElementById(id);
 
@@ -27,11 +31,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -48,7 +48,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '16' + '/' + '20';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -76,11 +76,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -97,7 +93,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '10' + '/' + '20';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -124,11 +120,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -145,7 +137,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '4' + '/' + '20';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -173,11 +165,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -194,7 +182,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '160' + '/' + '200';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -206,7 +194,7 @@ export default {
     const chart5 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [3-15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
+      const qs = [3 - 15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
       this.myChart5 = new Chart(chartEl, {
@@ -221,11 +209,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -242,7 +226,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '3:15';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -255,7 +239,7 @@ export default {
     const chart6 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [3-15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
+      const qs = [3 - 15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
       this.myChart6 = new Chart(chartEl, {
@@ -270,11 +254,7 @@ export default {
             },
           ],
         },
-        options: {
-             rotation: .75 * Math.PI
-             ,
-             circumference: 1.5 * Math.PI,
-        },
+        options,
         // plugin for inner text visualisation
         plugins: [
           {
@@ -291,7 +271,7 @@ export default {
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '22 secs';
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.75;
+              const textY = height / 1.65;
 
               ctx.fillText(text, textX, textY);
               ctx.save();
@@ -301,15 +281,12 @@ export default {
       });
     };
 
-    
-
     chart1('myChart');
     chart2('myChart2');
     chart3('myChart3');
     chart4('myChart4');
     chart5('myChart5');
     chart6('myChart6');
-
   },
   beforeUnmount() {
     if (this.myChart1) {
@@ -394,5 +371,4 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
 </style>
