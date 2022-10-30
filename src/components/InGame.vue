@@ -96,7 +96,7 @@ export default {
         this.$emit('changeStage', {
           nextStage: GAME_STAGE.SCORE_PAGE,
         });
-      }, 0);
+      }, 5000);
     }
   },
   methods: {
