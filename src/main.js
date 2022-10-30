@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import Toast, { TYPE } from 'vue-toastification';
 // Icons css
 import './assets/strayballoon/style.css';
+import 'vue-loading-overlay/dist/css/index.css';
 import 'vue-toastification/dist/index.css';
 // Global
 import './global.scss';

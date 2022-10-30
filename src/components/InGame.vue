@@ -1,11 +1,13 @@
 <script>
 import { useToast } from 'vue-toastification';
+import Loading from 'vue-loading-overlay';
 import VIcon from './VIcon.vue';
 import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
   name: 'InGame',
   components: {
+    Loading,
     VIcon,
   },
   inject: ['axios', 'ws'],
@@ -26,6 +28,7 @@ export default {
   emits: ['changeStage'],
   data() {
     return {
+      isLoading: true,
       toast: null,
       currentQuestionIndex: 0,
       answers: [
@@ -75,6 +78,7 @@ export default {
           },
         })
       ).data.answers;
+      this.isLoading = false;
     },
   },
   async mounted() {
@@ -90,6 +94,7 @@ export default {
           },
         })
       ).data.answers;
+      this.isLoading = false;
     } else {
       this.toast.success("You have answered all the questions! Let's go to score page!");
       window.setTimeout(() => {
@@ -131,6 +136,7 @@ export default {
       }
       this.currentQuestionIndex += 1;
       this.answerSelected = false;
+      this.isLoading = true;
     },
     selectedCorrectAnswer() {
       const selectedAnswer = this.answers.find(({ clicked }) => clicked);
@@ -178,6 +184,7 @@ export default {
         </div>
       </div>
     </div>
+    <Loading v-model:active="isLoading" loader="bars" :lock-scroll="true" />
     <div class="answers-wrapper">
       <button
         v-for="answer in answers"
