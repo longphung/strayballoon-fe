@@ -170,9 +170,11 @@ export default {
         <VIcon name="stopwatch" />
       </div>
     </div>
-    <div class="question">
+
+    <div class="d-flex justify-content-center position-relative">
       <div class="question-part">{{ currentQuestion?.description }}</div>
-      <div v-if="answerSelected">
+
+      <div v-if="answerSelected" class='feedback-container'>
         <div class="feedback">
           {{
             currentQuestion.feedback
@@ -221,11 +223,6 @@ export default {
   color: white;
 }
 
-.ingame-container {
-  display: grid;
-  grid-template-rows: 8% 40% 40% 12%;
-}
-
 .setting {
   place-self: center start;
   padding-top: 2rem;
@@ -251,18 +248,17 @@ export default {
 }
 
 .timer {
-  display: grid;
-  grid-template-columns: 63.5% 36.5%;
-  justify-content: space-around;
-  align-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bar {
   background-color: #f8c033;
   width: 26rem;
+  height: 2rem;
+  margin-right: 1rem;
   border-radius: 2.5rem;
-  display: grid;
-  justify-self: end;
 }
 
 .stopwatch {
@@ -271,28 +267,25 @@ export default {
   color: orangered;
 }
 
-.question {
-  display: grid;
-  justify-content: space-around;
-  align-content: center;
-  grid-template-columns: 68% 32%;
-}
 .question-part {
-  display: grid;
   width: 35rem;
   height: 12rem;
   font-size: 1.6rem;
-  justify-content: center;
-  align-content: center;
   border: solid 0.3rem;
   border-radius: 1rem;
   background-color: white;
   justify-self: end;
+  overflow: scroll;
+  padding: 1rem;
+}
+
+.feedback-container {
+  position: absolute;
+  right: 2rem;
+  bottom: 20%;
 }
 
 .feedback {
-  display: grid;
-  justify-self: center;
   background-color: #1e90ff;
   position: relative;
   font-size: 2rem;
@@ -306,11 +299,9 @@ export default {
 }
 
 .feedback:before {
-  display: grid;
-  justify-self: center;
   content: '';
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   position: absolute;
   border-left: 24px solid #1e90ff;
   border-right: 12px solid transparent;
@@ -322,9 +313,7 @@ export default {
 
 .answers-wrapper {
   display: grid;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   justify-content: space-around;
@@ -338,7 +327,11 @@ export default {
   border-radius: 0.3rem;
   width: 35rem;
   font-size: 1.5rem;
+  min-height: 3rem;
+  max-height: 5rem;
+  overflow: scroll;
 }
+
 .next {
   display: grid;
   justify-content: space-around;
