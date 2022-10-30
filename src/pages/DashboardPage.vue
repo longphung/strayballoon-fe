@@ -41,9 +41,22 @@ export default {
   },
   methods: {
     handleSessionStart() {
-      // this.ws.send(JSON.stringify({
-      //   "session_status": "started",
-      // }))
+      this.ws.send(JSON.stringify({
+        type: "session_update",
+        payload: {
+          session_status: "started",
+          session_id: this.sessionInfo.id,
+        }
+      }))
+    },
+    handleSessionEnd() {
+      this.ws.send(JSON.stringify({
+        type: 'session_update',
+        payload: {
+          session_status: "ended",
+          session_id: this.sessionInfo.id,
+        }
+      }))
     },
     handleConnection() {
       this.ws = new WebSocket(`${baseWs}/session/${this.userData.userId}?token=${this.userData.token}`);
@@ -81,7 +94,7 @@ export default {
 
 <template>
   <section class="dashboard-page">
-    <ClassNameTab @session-start="handleSessionStart" />
+    <ClassNameTab @session-start="handleSessionStart" :session-info='sessionInfo' @session-end='handleSessionEnd' />
     <TimerTab />
     <TopPerformers />
     <ProgressMap />

@@ -7,7 +7,7 @@ export default {
   components: {
     VIcon,
   },
-  inject: ['axios'],
+  inject: ['axios', 'ws'],
   props: {
     questions: {
       type: Array,
@@ -19,7 +19,7 @@ export default {
   emits: ['changeStage'],
   data() {
     return {
-      currentQuestion: this.questions[0],
+      currentQuestionIndex: 0,
       answers: [
         {
           id: '1',
@@ -44,7 +44,22 @@ export default {
       ],
       // We only allow people to select answer once
       answerSelected: false,
+      timer: new Date(),
     };
+  },
+  computed: {
+    currentQuestion() {
+      return this.questions[this.currentQuestionIndex];
+    },
+  },
+  watch: {
+    currentQuestionIndex(val, previousVal) {
+      if (!val || val === previousVal) {
+        return;
+      }
+      // Reset timer when student is taking on new question
+      this.timer = new Date();
+    },
   },
   async mounted() {
     this.answers = (
@@ -63,6 +78,20 @@ export default {
       this.answerSelected = true;
       // eslint-disable-next-line no-param-reassign
       answer.clicked = true;
+      const now = new Date();
+      this.ws.send(
+        JSON.stringify({
+          type: 'session_progress_update',
+          payload: {
+            question_id: this.currentQuestion.id,
+            question_status: 'completed',
+            answer_taken: answer.id,
+            time_taken: (now.getTime() - this.timer.getTime()) / 1000,
+            // TODO: get session_progress_id
+            session_progress_id: 1,
+          },
+        })
+      );
     },
     handleNextButtonClick() {
       this.$emit('changeStage', {

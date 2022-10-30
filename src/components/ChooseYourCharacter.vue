@@ -82,13 +82,13 @@ export default {
     </div>
     <!-- TODO: restyle this -->
     <form class="container-sm mb-3 row m-auto session-id">
-      <label for="session-id" class="col-sm-2 col-form-label label">Session ID</label>
+      <label for="session-id" class="col-sm-2 col-form-label label">Instructor ID</label>
       <div class="col-sm-10">
         <input
           id="session-id"
           type="text"
           class="form-control"
-          placeholder="Session ID..."
+          placeholder="Instructor ID..."
           name="sessionId"
           @input="handleInputChange"
         />
@@ -275,16 +275,15 @@ img {
   border-radius: 10px;
   border: 2px solid white;
   background: #0b5ed7;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   text-align: center;
-  width: 10%;
   margin-top: 40px;
   padding-top: 9px;
   padding-bottom: 9px;
 }
 
 .col-sm-10 {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
   width: 20%;
   margin-top: 40px;
 }

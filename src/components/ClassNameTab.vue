@@ -2,17 +2,25 @@
 export default {
   name: 'ClassNameTab',
   inject: ['userData'],
-  emits: ['sessionStart'],
+  props: {
+    sessionInfo: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  emits: ['sessionStart', 'sessionEnd'],
 };
 </script>
 
 <template>
   <div class="class-name">
     <div class="tab">
-      <h1>Current sesion ID:</h1>
+      <h1>Your ID:</h1>
       <h1>{{ userData?.userId }}</h1>
       <button class="btn btn-primary" @click="$emit('sessionStart')">Start Session</button>
-      <button class="btn btn-danger" @click="$emit('sessionStart')">End Session</button>
+      <button class="btn btn-danger" @click="$emit('sessionEnd')">End Session</button>
     </div>
   </div>
 </template>

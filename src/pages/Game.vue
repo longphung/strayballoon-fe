@@ -31,6 +31,7 @@ export default {
         this.session = newSession;
       },
       axios: computed(() => this.axios),
+      ws: computed(() => this.ws),
     };
   },
   data() {
@@ -42,6 +43,7 @@ export default {
       toast: {},
       axios: null,
       questions: [],
+      sessionProgress: null,
     };
   },
   computed: {
@@ -57,13 +59,18 @@ export default {
           return '';
       }
     },
+    propsToPass() {
+      if (this.gameStage === GAME_STAGE.IN_GAME) {
+        return {
+          questions: this.questions,
+        };
+      }
+      return {};
+    },
   },
   watch: {
     session(val, previousVal) {
-      if (!val.sessionId) {
-        return;
-      }
-      if (val.sessionId === previousVal.sessionId) {
+      if (!val.sessionId || val.sessionId === previousVal.sessionId) {
         return;
       }
       if (previousVal.sessionId) {
@@ -72,8 +79,13 @@ export default {
       this.handleSocketConnection(val);
     },
   },
-  created() {
+  mounted() {
     this.toast = useToast();
+    this.axios = axios.create({
+      headers: {
+        Authorization: `token ${this.userData.token}`,
+      },
+    });
   },
   beforeUnmount() {
     if (this.ws) {
@@ -84,11 +96,6 @@ export default {
     async handleChangeStage(data) {
       try {
         const { nextStage } = data;
-        this.axios = axios.create({
-          headers: {
-            Authorization: `token ${this.userData.token}`,
-          },
-        });
         if (this.session.sessionId && this.ws) {
           await this.handleFetchQuestions();
           this.gameStage = nextStage;
@@ -101,6 +108,15 @@ export default {
       const result = await this.axios.get('/api/questions/');
       this.questions = result.data;
     },
+    async handleFetchStudentSessionProgress(sessionId, studentId) {
+      const result = await this.axios.get('/api/session-progress-of-students/', {
+        params: {
+          session_id: sessionId,
+          student_id: studentId,
+        },
+      });
+      this.sessionProgress = result.data;
+    },
     handleSocketConnection(session) {
       this.ws = new WebSocket(`${baseWs}/session/${session.sessionId}?token=${this.userData.token}`);
       this.ws.onmessage = (event) => {
@@ -110,6 +126,9 @@ export default {
           switch (data.type) {
             case 'session_join':
               break;
+            case 'session_info_student':
+              this.handleFetchStudentSessionProgress(data.sessionId, this.userData?.userId);
+              break;
             default:
               break;
           }
@@ -118,7 +137,7 @@ export default {
         }
       };
       this.ws.onopen = () => {
-        console.log(`You have joined session ${session.sessionId}`);
+        this.toast.success(`You have joined session ${session.sessionId}`);
       };
     },
   },
@@ -127,7 +146,7 @@ export default {
 
 <template>
   <section class="game-page" :class="gamePageBackgroundClass">
-    <component :is="gameStage" :questions='questions' @change-stage="handleChangeStage" />
+    <component :is="gameStage" v-bind="propsToPass" @change-stage="handleChangeStage" />
   </section>
 </template>
 
