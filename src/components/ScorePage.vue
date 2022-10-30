@@ -1,5 +1,6 @@
 <script>
 import VIcon from './VIcon.vue';
+import { GAME_STAGE } from '../pages/Game.vue';
 
 export default {
   name: 'ScorePage',
@@ -15,6 +16,11 @@ export default {
     },
   },
   emits: ['changeStage'],
+  methods: {
+    handleNewGameClick() {
+      this.$emit('changeStage', { nextStage: GAME_STAGE.CHOOSE_CHARACTER });
+    },
+  },
 };
 </script>
 <template>
@@ -42,13 +48,7 @@ export default {
     </div>
 
     <div class="d-flex justify-content-center m-4">
-      <button
-        type="button"
-        class="p2 btn btn-lg btn-success"
-        @click="$emit('changeStage', { nextStage: GAME_STAGE.SCORE_PAGE })"
-      >
-        New Game
-      </button>
+      <button type="button" class="p2 btn btn-lg btn-success" @click="handleNewGameClick">New Game</button>
     </div>
   </section>
 </template>
