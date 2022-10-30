@@ -120,13 +120,8 @@ export default {
       const result = await this.axios.get('/api/questions/');
       this.questions = result.data;
     },
-    async handleFetchStudentSessionProgress(sessionId, studentId) {
-      const result = await this.axios.get('/api/session-progress-of-students/', {
-        params: {
-          session_id: sessionId,
-          student_id: studentId,
-        },
-      });
+    async handleFetchStudentSessionProgress(sessionProgressId) {
+      const result = await this.axios.get(`/api/session-progress/${sessionProgressId}/`);
       this.sessionProgress = result.data;
     },
     handleSocketConnection(session) {
@@ -139,7 +134,7 @@ export default {
             case 'session_join':
               break;
             case 'session_info_student':
-              this.handleFetchStudentSessionProgress(data.sessionId, this.userData?.userId);
+              this.handleFetchStudentSessionProgress(data.sessionProgressId);
               break;
             default:
               break;
