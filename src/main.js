@@ -4,6 +4,8 @@ import Toast, { TYPE } from 'vue-toastification';
 import './assets/strayballoon/style.css';
 import 'vue-loading-overlay/dist/css/index.css';
 import 'vue-toastification/dist/index.css';
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale.css';
 // Global
 import './global.scss';
 import App from './App.vue';

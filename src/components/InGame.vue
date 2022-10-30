@@ -117,6 +117,7 @@ export default {
         JSON.stringify({
           type: 'session_progress_update',
           payload: {
+            question_set: this.questions,
             question_id: this.currentQuestion.id,
             question_status: 'completed',
             answer_taken: answer.id,
@@ -128,7 +129,7 @@ export default {
     },
     handleNextButtonClick() {
       // if last question then go to score page
-      if (this.currentQuestionIndex === this.questions.length - 1) {
+      if (this.currentQuestionIndex === this.questionsToUse.length - 1) {
         this.$emit('changeStage', {
           nextStage: GAME_STAGE.SCORE_PAGE,
         });

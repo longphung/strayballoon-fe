@@ -63,12 +63,14 @@ export default {
   border-radius: 10px;
   gap: 30px;
 }
-.crown{
+
+.crown {
   position: absolute;
   left: calc(100% - 1.2rem);
   bottom: calc(100% - 0.6rem);
   font-size: 2rem;
 }
+
 .perf {
   display: flex;
   align-items: center;

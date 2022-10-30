@@ -24,7 +24,8 @@ export default {
       ws: null,
       sessionInfo: {},
       toast: {},
-      students: [],
+      studentsData: {},
+      questionSet: [],
     };
   },
   created() {
@@ -41,22 +42,26 @@ export default {
   },
   methods: {
     handleSessionStart() {
-      this.ws.send(JSON.stringify({
-        type: "session_update",
-        payload: {
-          session_status: "started",
-          session_id: this.sessionInfo.id,
-        }
-      }))
+      this.ws.send(
+        JSON.stringify({
+          type: 'session_update',
+          payload: {
+            session_status: 'started',
+            session_id: this.sessionInfo.id,
+          },
+        })
+      );
     },
     handleSessionEnd() {
-      this.ws.send(JSON.stringify({
-        type: 'session_update',
-        payload: {
-          session_status: "ended",
-          session_id: this.sessionInfo.id,
-        }
-      }))
+      this.ws.send(
+        JSON.stringify({
+          type: 'session_update',
+          payload: {
+            session_status: 'ended',
+            session_id: this.sessionInfo.id,
+          },
+        })
+      );
     },
     handleConnection() {
       this.ws = new WebSocket(`${baseWs}/session/${this.userData.userId}?token=${this.userData.token}`);
@@ -74,15 +79,24 @@ export default {
             case 'session_join':
               if (data.role.includes('students')) {
                 this.toast.info(`Student ${data.username} joined the session.`);
-                this.students.push(data.username);
               }
               break;
             case 'session_update':
               this.sessionInfo = {
                 status: data.sessionStatus,
-                id: data.sessionId
+                id: data.sessionId,
+              };
+              break;
+            case 'session_progress_update': {
+              this.studentsData[data.student.username] = {
+                fullName: `${data.student.first_name} ${data.student.last_name}`,
+                sessionProgress: data.sessionProgress,
+              };
+              if (!this.questionSet.length) {
+                this.questionSet = data.questionSet;
               }
-              break
+              break;
+            }
             default:
               break;
           }
@@ -100,10 +114,10 @@ export default {
 
 <template>
   <section class="dashboard-page">
-    <ClassNameTab @session-start="handleSessionStart" :session-info='sessionInfo' @session-end='handleSessionEnd' />
+    <ClassNameTab :session-info="sessionInfo" @session-start="handleSessionStart" @session-end="handleSessionEnd" />
     <TimerTab />
     <TopPerformers />
-    <ProgressMap />
+    <ProgressMap :students-data="studentsData" :question-set="questionSet" />
     <HelpRequest />
   </section>
 </template>

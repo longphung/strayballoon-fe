@@ -7,10 +7,30 @@ export default {
   components: {
     ProgressStudentAvatar,
   },
+  props: {
+    studentsData: {
+      type: Object,
+      required: true,
+    },
+    questionSet: {
+      type: Array,
+      required: true,
+    },
+  },
+  computed: {
+    students() {
+      return Object.values(this.studentsData);
+    },
+  },
   data() {
     return {
       progress: 0,
     };
+  },
+  methods: {
+    getStudentProgress(student) {
+      return (student.sessionProgress.length / this.questionSet.length) * 100;
+    },
   },
 };
 </script>
@@ -18,9 +38,14 @@ export default {
 <template>
   <div class="progress-map">
     <p class="progress-title">Progress Map</p>
-    <div class="progress-bar">
+    <div class="progress-map__bar">
       <div class="bar"></div>
-      <ProgressStudentAvatar :progress='progress' />
+      <ProgressStudentAvatar
+        v-for="student in students"
+        :key="student[0]"
+        :progress="getStudentProgress(student)"
+        :student="student"
+      />
     </div>
   </div>
 </template>
@@ -38,7 +63,7 @@ export default {
   margin-bottom: 10rem;
 }
 
-.progress-bar {
+.progress-map__bar {
   position: relative;
   margin: 0 1.375rem;
 }
