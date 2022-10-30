@@ -39,7 +39,7 @@ export default {
     handleInputChange: debounce(function (event) {
       this.setSession({
         ...this.session,
-        sessionId: event.target.value,
+        instructorId: event.target.value.trim(),
       });
     }, 250),
   },
@@ -54,36 +54,35 @@ export default {
       </router-link>
     </div>
   </section>
-  <section class="game-container">
+  <section>
     <div class="choose-character">
       <p class="p2">CHOOSE YOUR CHARACTER</p>
     </div>
-    <div class="character">
-      <div class="character-image"><img :src="currentChar" /></div>
+    <div>
+      <div class="character-image"><img :src="currentChar" alt="current char" /></div>
     </div>
     <div class="characters">
-      <button class="character-1" @click="handleCharacterButtonClick('/character1.png')">
+      <button type="button" class="character" @click="handleCharacterButtonClick('/character1.png')">
         <img src="/character1.png" />
         <VIcon v-if="currentChar === '/character1.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-2" @click="handleCharacterButtonClick('/character2.png')">
+      <button type="button" class="character" @click="handleCharacterButtonClick('/character2.png')">
         <img src="/character2.png" />
         <VIcon v-if="currentChar === '/character2.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-3" @click="handleCharacterButtonClick('/character3.png')">
+      <button type="button" class="character" @click="handleCharacterButtonClick('/character3.png')">
         <img src="/character3.png" />
         <VIcon v-if="currentChar === '/character3.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-4" @click="handleCharacterButtonClick('/character4.png')">
+      <button type="button" class="character" @click="handleCharacterButtonClick('/character4.png')">
         <img src="/character4.png" />
         <VIcon v-if="currentChar === '/character4.png'" class="check" name="checkbox-checked" />
       </button>
-      <button class="character-5" @click="handleCharacterButtonClick('/character5.png')">
+      <button type="button" class="character" @click="handleCharacterButtonClick('/character5.png')">
         <img src="/character5.png" />
         <VIcon v-if="currentChar === '/character5.png'" class="check" name="checkbox-checked" />
       </button>
     </div>
-    <!-- TODO: restyle this -->
     <form class="container-sm mb-3 row m-auto session-id">
       <label for="session-id" class="col-sm-2 col-form-label label">Instructor ID</label>
       <div class="col-sm-10">
@@ -99,7 +98,9 @@ export default {
     </form>
 
     <div class="next">
-      <button type="button" class="p1 btn btn-success" :disabled="disabledNext" @click="handleNextButtonClick">NEXT</button>
+      <button type="button" class="p1 btn btn-success" :disabled="disabledNext" @click="handleNextButtonClick">
+        NEXT
+      </button>
     </div>
   </section>
 </template>
@@ -111,18 +112,6 @@ export default {
 .choose {
   display: grid;
   grid-template-columns: auto auto;
-}
-
-.game-container {
-  display: grid;
-  grid-template-rows: 15% 40% 30% 15%;
-}
-
-.link {
-  place-self: center start;
-  padding-top: 2rem;
-  padding-left: 6rem;
-  font-size: 4rem;
 }
 
 .help {
@@ -142,6 +131,7 @@ export default {
   display: grid;
   justify-content: space-around;
   align-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .p1 {
@@ -171,12 +161,13 @@ export default {
   align-content: center;
 }
 .character-image {
-  background-size: contain;
   border: solid 0.3rem white;
   background-color: antiquewhite;
-  width: 16rem;
-  height: 15.6rem;
-  border-radius: 8rem;
+  width: 12rem;
+  height: 12rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: auto;
 }
 
 .characters {
@@ -185,11 +176,12 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 5rem;
   justify-self: center;
+  padding: 0 5rem;
 }
 
-.character-1 {
+.character {
   border: solid 0.3rem white;
-  border-radius: 12rem;
+  border-radius: 50%;
   background-size: contain;
   background-color: antiquewhite;
   height: 10rem;
@@ -197,12 +189,6 @@ export default {
   position: relative;
 }
 
-.crown {
-  position: absolute;
-  left: calc(100% - 1.2rem);
-  top: calc(100% - 0.6rem);
-  font-size: 2rem;
-}
 .check {
   position: absolute;
   left: calc(100% - 1.2rem);
@@ -210,46 +196,6 @@ export default {
   font-size: 2.5rem;
   color: green;
   background-color: white;
-}
-
-.character-2 {
-  border: solid 0.3rem white;
-  border-radius: 12rem;
-  background-size: contain;
-  background-color: antiquewhite;
-  height: 10rem;
-  width: 10rem;
-  position: relative;
-}
-
-.character-3 {
-  border: solid 0.3rem white;
-  border-radius: 12rem;
-  background-size: contain;
-  background-color: antiquewhite;
-  height: 10rem;
-  width: 10rem;
-  position: relative;
-}
-
-.character-4 {
-  border: solid 0.3rem white;
-  border-radius: 12rem;
-  background-size: contain;
-  background-color: antiquewhite;
-  height: 10rem;
-  width: 10rem;
-  position: relative;
-}
-
-.character-5 {
-  border: solid 0.3rem white;
-  border-radius: 12rem;
-  background-size: contain;
-  background-color: antiquewhite;
-  height: 10rem;
-  width: 10rem;
-  position: relative;
 }
 
 img {

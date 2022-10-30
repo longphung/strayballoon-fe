@@ -77,6 +77,12 @@ export default {
                 this.students.push(data.username);
               }
               break;
+            case 'session_update':
+              this.sessionInfo = {
+                status: data.sessionStatus,
+                id: data.sessionId
+              }
+              break
             default:
               break;
           }

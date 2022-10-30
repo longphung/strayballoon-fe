@@ -6,71 +6,78 @@ export default {
   components: {
     VIcon,
   },
+  props: {
+    character: {
+      type: String,
+      default() {
+        return '';
+      },
+    },
+  },
+  emits: ['changeStage'],
 };
 </script>
 <template>
   <section class="choose">
-    <div class="setting">
-      <router-link class="hand-stop" to="/">
-        <VIcon name="setting" />
-      </router-link>
+    <div class="chosen-character">
+      <img :src="character" alt="selected character" />
     </div>
-    <div class="chosen-character"></div>
-    <div class="help">
+
+    <span class="help">
       <router-link class="hand-stop" to="/">
         <VIcon name="notification" />
       </router-link>
-    </div>
+    </span>
   </section>
   <section class="ingame-container">
-    <div class="choose-character">
+    <div class="choose-character mb-4">
       <p class="p1">WELL DONE</p>
     </div>
     <div class="players">
-      <div class="player-1"></div>
-      <div class="player-2"></div>
-      <div class="player-3"></div>
-      <div class="player-4"></div>
-      <div class="player-5"></div>
+      <div class="player"></div>
+      <div class="player"></div>
+      <div class="player"></div>
+      <div class="player"></div>
+      <div class="player"></div>
     </div>
-    <div class="exit">
-      <button type="button" class="p2 btn btn-danger">EXIT</button>
+
+    <div class="d-flex justify-content-center m-4">
+      <button
+        type="button"
+        class="p2 btn btn-lg btn-success"
+        @click="$emit('changeStage', { nextStage: GAME_STAGE.SCORE_PAGE })"
+      >
+        New Game
+      </button>
     </div>
   </section>
 </template>
 
 <style scoped>
 .choose {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
-.ingame-container {
-  display: grid;
-  grid-template-rows: 15% 70% 15%;
-}
-
-.setting {
-  place-self: center start;
-  padding-top: 2rem;
-  padding-left: 6rem;
-  font-size: 4rem;
+  position: relative;
+  margin-bottom: 2rem;
 }
 
 .help {
-  padding-top: 2rem;
-  place-self: center end;
-  padding-right: 6rem;
   font-size: 4rem;
+  top: 2rem;
+  right: 0;
+  position: absolute;
 }
 
 .chosen-character {
-  place-self: center;
   font-size: 4rem;
   border: solid 0.2rem;
-  border-radius: 3rem;
-  width: 6rem;
-  height: 6rem;
+  border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+  overflow: hidden;
+  margin: auto;
+
+  & img {
+    width: 10rem;
+  }
 }
 
 .choose-character {
@@ -79,54 +86,31 @@ export default {
   align-content: space-between;
 }
 
-.exit {
-  display: grid;
-  justify-content: space-around;
-  align-content: center;
-}
-
 .players {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  gap: 0.5rem;
-  justify-content: space-around;
-  align-content: center;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+
+  & .player {
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
-.player-1 {
+.player {
   border: solid 0.3rem;
   border-radius: 0.3rem;
   width: 30rem;
+  height: 4rem;
   background-color: white;
 }
 
 .hand-stop {
   text-decoration: none;
   color: orangered;
-}
-
-.player-2 {
-  border: solid 0.3rem;
-  border-radius: 0.3rem;
-  background-color: white;
-}
-
-.player-3 {
-  border: solid 0.3rem;
-  border-radius: 0.3rem;
-  background-color: white;
-}
-
-.player-4 {
-  border: solid 0.3rem;
-  border-radius: 0.3rem;
-  background-color: white;
-}
-
-.player-5 {
-  border: solid 0.3rem;
-  border-radius: 0.3rem;
-  background-color: white;
 }
 
 .p1 {

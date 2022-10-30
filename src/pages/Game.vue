@@ -1,4 +1,5 @@
 <script>
+import Swal from 'sweetalert2';
 import { computed } from 'vue';
 import { useToast } from 'vue-toastification';
 import axios from 'axios';
@@ -71,6 +72,10 @@ export default {
             questions: this.questions,
             sessionProgress: this.sessionProgress,
           };
+        case GAME_STAGE.SCORE_PAGE:
+          return {
+            character: this.session.character,
+          };
         default:
           return {};
       }
@@ -78,10 +83,10 @@ export default {
   },
   watch: {
     session(val, previousVal) {
-      if (!val.sessionId || val.sessionId === previousVal.sessionId) {
+      if (!val.instructorId || val.instructorId === previousVal.instructorId) {
         return;
       }
-      if (previousVal.sessionId) {
+      if (previousVal.instructorId) {
         this.ws.close();
       }
       this.handleSocketConnection(val);
@@ -104,11 +109,11 @@ export default {
     async handleChangeStage(data) {
       try {
         const { nextStage } = data;
-        if (nextStage === GAME_STAGE.SCORE_PAGE) {
+        if (nextStage === GAME_STAGE.SCORE_PAGE || nextStage === GAME_STAGE.CHOOSE_CHARACTER) {
           this.gameStage = nextStage;
           return;
         }
-        if (this.session.sessionId && this.ws) {
+        if (this.session.instructorId && this.ws) {
           await this.handleFetchQuestions();
           this.gameStage = nextStage;
         }
@@ -125,7 +130,7 @@ export default {
       this.sessionProgress = result.data;
     },
     handleSocketConnection(session) {
-      this.ws = new WebSocket(`${baseWs}/session/${session.sessionId}?token=${this.userData.token}`);
+      this.ws = new WebSocket(`${baseWs}/session/${session.instructorId}?token=${this.userData.token}`);
       this.ws.onmessage = (event) => {
         const { data: rawData } = event;
         try {
@@ -134,7 +139,30 @@ export default {
             case 'session_join':
               break;
             case 'session_info_student':
-              this.handleFetchStudentSessionProgress(data.sessionProgressId);
+              this.session.sessionStatus = data.sessionStatus;
+              this.session.sessionid = data.sessionId;
+              if (data.sessionProgressId) {
+                this.handleFetchStudentSessionProgress(data.sessionProgressId);
+              }
+              break;
+            case 'session_progress_started':
+              if (Number.parseInt(data.sessionId, 10) !== Number.parseInt(this.session.sessionId, 10)) {
+                this.session.sessionId = data.sessionId;
+                this.handleFetchStudentSessionProgress(data.sessionProgressId);
+              }
+              break;
+            case 'session_update':
+              if (data.sessionStatus === 'ended') {
+                Swal.fire({
+                  title: 'Your Instructor Ended The Session',
+                  text: 'Go to Score Page',
+                  confirmButtonText: 'OK!',
+                  didOpen: () => {
+                    this.gameStage = GAME_STAGE.SCORE_PAGE;
+                  },
+                });
+                return;
+              }
               break;
             default:
               break;
@@ -144,7 +172,7 @@ export default {
         }
       };
       this.ws.onopen = () => {
-        this.toast.success(`You have joined session ${session.sessionId}`);
+        this.toast.success(`You have joined session ${session.instructorId}`);
         this.disabledNext = false;
       };
     },
@@ -162,9 +190,7 @@ export default {
 .game-page {
   background: #f6f8ff;
   width: 100%;
-  height: 47rem;
-  display: grid;
-  grid-template-rows: 1fr 5fr;
+  padding: 2rem
 }
 
 .choose-your-character {
