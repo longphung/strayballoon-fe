@@ -82,6 +82,12 @@ export default {
               }
               break;
             case 'session_update':
+              if (data.sessionStatus === 'ended') {
+                this.sessionInfo = {};
+                this.studentsData = {};
+                this.questionSet = [];
+                return;
+              }
               this.sessionInfo = {
                 status: data.sessionStatus,
                 id: data.sessionId,
