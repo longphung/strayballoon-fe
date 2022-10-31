@@ -13,13 +13,17 @@ export default {
   <aside class="sidebar">
     <ul class="sidebar__list">
       <li class="sidebar__item">
+        <router-link class="report-link" to="/">
         <VIcon name="home-page" />
         Home
+      </router-link>
       </li>
 
       <li class="sidebar__item">
+        <router-link class="report-link" to="/statistics">
         <VIcon name="chart" />
         Statistic
+      </router-link>
       </li>
 
       <li class="sidebar__item">
