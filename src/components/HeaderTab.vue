@@ -4,16 +4,16 @@ import VIcon from './VIcon.vue';
 import SlideSwitch from './SlideSwitch.vue';
 
 export default {
-  name: 'HeaderTab', 
+  name: 'HeaderTab',
   components: {
     BreadCrumb,
     VIcon,
     SlideSwitch,
   },
+  inject: ['userData'],
   computed: {
     userName() {
-      // TODO: fetch username
-      return 'Jack Castle';
+      return this.userData.userName;
     },
   },
 };
@@ -48,7 +48,7 @@ export default {
         </router-link>
 
         <SlideSwitch class="quick-links__toggle">
-          <VIcon name='sun' class='quick-links__toggle-icon' />
+          <VIcon name="sun" class="quick-links__toggle-icon" />
         </SlideSwitch>
 
         <div class="header__user-name">

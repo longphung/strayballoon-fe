@@ -20,7 +20,7 @@ export default {
       </li>
 
       <li class="sidebar__item">
-        <router-link class="report-link" to="/download">
+        <router-link class="report-link" to="/statistics">
         <VIcon name="chart" />
         Statistic
       </router-link>

@@ -4,7 +4,7 @@ import DashboardPage from '../pages/DashboardPage.vue';
 import ReportPage from '../pages/ReportPage.vue';
 import Game from '../pages/Game.vue';
 import LoginPage from '../pages/LoginPage.vue';
-import DownloadPage from '../pages/DownloadPage.vue';
+import StatisticsPage from '../pages/StatisticsPage.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,10 +22,9 @@ const router = createRouter({
           component: ReportPage,
         },
         {
-          path: '/download',
-          component: DownloadPage,
+          path: '/statistics',
+          component: StatisticsPage,
         },
-
       ],
     },
     {

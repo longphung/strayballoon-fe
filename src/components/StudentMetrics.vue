@@ -3,9 +3,17 @@ import Chart from 'chart.js/auto';
 
 export default {
   name: 'StudentMetrics',
+  props: {
+    problemsAnalyzed: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
-      myChart1: null,
+      totalNumberOfProblemsChart: null,
+      totalTimeTakenChart: null,
+      totalTimeTakenPerProblemChart: null,
     };
   },
   mounted() {
@@ -16,10 +24,10 @@ export default {
     const chart1 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [16, 20]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
+      const qs = [this.problemsAnalyzed.correct, this.problemsAnalyzed.inCorrect]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
-      this.myChart1 = new Chart(chartEl, {
+      this.totalNumberOfProblemsChart = new Chart(chartEl, {
         type: 'doughnut',
         data: {
           labels: questionsLabels,
@@ -41,12 +49,11 @@ export default {
               const { width, height, ctx } = chart;
 
               ctx.restore();
-              const fontSize = (height / 160).toFixed(2);
               // how to add weight / bold??
-              ctx.font = `${fontSize}em sans-serif`;
+              ctx.font = `1.25rem sans-serif`;
               ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = '16' + '/' + '20';
+              const text = `${this.problemsAnalyzed.correct}/${this.problemsAnalyzed.inCorrect}`;
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
               const textY = height / 1.65;
 
@@ -104,10 +111,10 @@ export default {
     const chart5 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [3 - 15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
+      const qs = [this.problemsAnalyzed.totalTimeTakenCorrect, this.problemsAnalyzed.totalTimeTakenInCorrect]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
-      this.myChart5 = new Chart(chartEl, {
+      this.totalTimeTakenChart = new Chart(chartEl, {
         type: 'doughnut',
         data: {
           labels: questionsLabels,
@@ -129,12 +136,11 @@ export default {
               const { width, height, ctx } = chart;
 
               ctx.restore();
-              const fontSize = (height / 160).toFixed(2);
               // how to add weight / bold??
-              ctx.font = `${fontSize}em sans-serif`;
+              ctx.font = `1.25rem sans-serif`;
               ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = '3:15';
+              const text = `${this.problemsAnalyzed.totalTimeTakenCorrect} / ${this.problemsAnalyzed.totalTimeTakenInCorrect}`;
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
               const textY = height / 1.65;
 
@@ -149,7 +155,7 @@ export default {
     const chart6 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [3 - 15]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
+      const qs = [this.problemsAnalyzed.averageTimeCorrect, this.problemsAnalyzed.averageTimeInCorrect]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
       const questionsLabels = ['Correct', 'Incorrect'];
 
       this.myChart6 = new Chart(chartEl, {
@@ -174,9 +180,8 @@ export default {
               const { width, height, ctx } = chart;
 
               ctx.restore();
-              const fontSize = (height / 160).toFixed(2);
               // how to add weight / bold??
-              ctx.font = `${fontSize}em sans-serif`;
+              ctx.font = `1.25rem sans-serif`;
               ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
               const text = '22 secs';
@@ -192,13 +197,13 @@ export default {
     };
 
     chart1('myChart');
-    chart3('myChart3');
+    // chart3('myChart3');
     chart5('myChart5');
     chart6('myChart6');
   },
   beforeUnmount() {
-    if (this.myChart1) {
-      this.myChart1.destroy();
+    if (this.totalNumberOfProblemsChart) {
+      this.totalNumberOfProblemsChart.destroy();
     }
   },
 };
@@ -209,7 +214,7 @@ export default {
     <div class="metrics">
       <div class="metrics-heading">TOTAL NUMBER OF PROBLEMS SOLVED</div>
       <div class="numbers">
-        <canvas id="myChart" class="m-auto" width="225" height="225"></canvas>
+        <canvas id="myChart" class="m-auto" width="300" height="300"></canvas>
       </div>
     </div>
     <div class="metrics">
@@ -221,13 +226,13 @@ export default {
     <div class="metrics">
       <div class="metrics-heading">TOTAL TIME TAKEN</div>
       <div class="numbers">
-        <canvas id="myChart5" class="m-auto" width="225" height="225"></canvas>
+        <canvas id="myChart5" class="m-auto" width="300" height="300"></canvas>
       </div>
     </div>
     <div class="metrics">
       <div class="metrics-heading">TOTAL TIME TAKEN PER PROBLEM</div>
       <div class="numbers">
-        <canvas id="myChart6" class="m-auto" width="225" height="225"></canvas>
+        <canvas id="myChart6" class="m-auto" width="300" height="300"></canvas>
       </div>
     </div>
   </div>
@@ -239,6 +244,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: solid #446894 0.5rem;
+  flex-grow: 1;
 }
 
 .metrics {
@@ -261,7 +267,7 @@ export default {
 .numbers {
   border-radius: 0.6rem;
   margin: 0.2rem;
-  height: 250px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
