@@ -29,19 +29,58 @@ export default {
           let totalTimeTakenCorrect = 0;
           let inCorrect = 0;
           let totalTimeTakenInCorrect = 0;
+          const questionTypes = {};
+          const questionLevels = {};
+
           for (let i = 0; i < progress.length; i += 1) {
             if (progress[i].is_correct) {
               correct += 1;
               totalTimeTakenCorrect += progress[i].time_taken;
+              console.log('>>>>>CORRECT');
+              console.log(progress[i].question_type);
+              console.log(progress[i].question_level);
+              console.log('CORRECT');
             } else {
               inCorrect += 1;
               totalTimeTakenInCorrect += progress[i].time_taken;
+              console.log('>>>>>INCORRECT');
+              console.log(progress[i].question_type);
+              console.log(progress[i].question_level);
+              console.log('INCORRECT');
+            }
+
+            if (questionTypes[progress[i].question_type.toLowerCase()] === undefined) {
+              questionTypes[progress[i].question_type.toLowerCase()] = 1;
+            } else {
+              questionTypes[progress[i].question_type.toLowerCase()] += 1;
+            }
+
+            if (questionLevels[progress[i].question_level] === undefined) {
+              questionLevels[progress[i].question_level] = 1;
+            } else {
+              questionLevels[progress[i].question_level] += 1;
             }
           }
+
           newResult.correct += correct;
           newResult.inCorrect += inCorrect;
           newResult.totalTimeTakenCorrect += totalTimeTakenCorrect;
           newResult.totalTimeTakenInCorrect += totalTimeTakenInCorrect;
+          Object.entries(questionLevels).forEach(([key, value]) => {
+            if (newResult.questionLevels[key] === undefined) {
+              newResult.questionLevels[key] = value;
+            } else {
+              newResult.questionLevels[key] += value;
+            }
+          });
+
+          Object.entries(questionTypes).forEach(([key, value]) => {
+            if (newResult.questionTypes[key] === undefined) {
+              newResult.questionTypes[key] = value;
+            } else {
+              newResult.questionTypes[key] += value;
+            }
+          });
           return newResult;
         },
         {
@@ -49,10 +88,18 @@ export default {
           totalTimeTakenCorrect: 0,
           inCorrect: 0,
           totalTimeTakenInCorrect: 0,
+          questionTypes: {},
+          questionLevels: {},
         }
       );
+      // Avergaes
       analyzed.averageTimeCorrect = (analyzed.totalTimeTakenCorrect / analyzed.correct).toFixed(2);
       analyzed.averageTimeInCorrect = (analyzed.totalTimeTakenInCorrect / analyzed.inCorrect).toFixed(2);
+      analyzed.averageTimePerQuestion = (
+        (analyzed.totalTimeTakenInCorrect + analyzed.totalTimeTakenCorrect) /
+        (analyzed.correct + analyzed.inCorrect)
+      ).toFixed(2);
+      // Rounding
       analyzed.totalTimeTakenInCorrect = analyzed.totalTimeTakenInCorrect.toFixed(2);
       analyzed.totalTimeTakenCorrect = analyzed.totalTimeTakenCorrect.toFixed(2);
       return analyzed;

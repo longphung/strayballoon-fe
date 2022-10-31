@@ -12,8 +12,8 @@ export default {
   data() {
     return {
       totalNumberOfProblemsChart: null,
-      totalTimeTakenChart: null,
-      totalTimeTakenPerProblemChart: null,
+      typesOfQuestionChart: null,
+      difficultiesOfQuestionChart: null,
     };
   },
   mounted() {
@@ -35,7 +35,7 @@ export default {
             {
               label: 'Questions answered & total correct',
               data: qs,
-              backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'],
+              backgroundColor: ['rgb(54, 162, 235)', 'red'],
             },
           ],
         },
@@ -53,7 +53,7 @@ export default {
               ctx.font = `1.25rem sans-serif`;
               ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = `${this.problemsAnalyzed.correct}/${this.problemsAnalyzed.inCorrect}`;
+              const text = `${this.problemsAnalyzed.correct} / ${this.problemsAnalyzed.inCorrect}`;
               const textX = Math.round((width - ctx.measureText(text).width) / 2);
               const textY = height / 1.65;
 
@@ -67,10 +67,10 @@ export default {
     const chart3 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [4, 16]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
-      const questionsLabels = ['Correct', 'Incorrect'];
+      const qs = Object.values(this.problemsAnalyzed.questionTypes);
+      const questionsLabels = Object.keys(this.problemsAnalyzed.questionTypes);
 
-      this.myChart3 = new Chart(chartEl, {
+      this.typesOfQuestionChart = new Chart(chartEl, {
         type: 'doughnut',
         data: {
           labels: questionsLabels,
@@ -78,7 +78,7 @@ export default {
             {
               label: 'Questions answered & total correct',
               data: qs,
-              backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'],
+              backgroundColor: ['rgb(54, 162, 235)', 'red', 'green', 'yellow', 'black', 'purple'],
             },
           ],
         },
@@ -89,19 +89,9 @@ export default {
             id: 'text',
             // beforeDraw: (chart, a, b) => {
             beforeDraw: (chart) => {
-              const { width, height, ctx } = chart;
+              const { ctx } = chart;
 
-              ctx.restore();
-              const fontSize = (height / 160).toFixed(2);
-              // how to add weight / bold??
-              ctx.font = `${fontSize}em sans-serif`;
-              ctx.textBaseline = 'middle';
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = '4' + '/' + '20';
-              const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.65;
-
-              ctx.fillText(text, textX, textY);
               ctx.save();
             },
           },
@@ -111,10 +101,10 @@ export default {
     const chart5 = (id) => {
       const chartEl = document.getElementById(id);
 
-      const qs = [this.problemsAnalyzed.totalTimeTakenCorrect, this.problemsAnalyzed.totalTimeTakenInCorrect]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
-      const questionsLabels = ['Correct', 'Incorrect'];
+      const qs = Object.values(this.problemsAnalyzed.questionLevels);
+      const questionsLabels = Object.keys(this.problemsAnalyzed.questionLevels);
 
-      this.totalTimeTakenChart = new Chart(chartEl, {
+      this.difficultiesOfQuestionChart = new Chart(chartEl, {
         type: 'doughnut',
         data: {
           labels: questionsLabels,
@@ -122,7 +112,7 @@ export default {
             {
               label: 'Questions answered & total correct',
               data: qs,
-              backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'],
+              backgroundColor: ['rgb(54, 162, 235)', 'red', 'green', 'yellow', 'black', 'purple'],
             },
           ],
         },
@@ -133,62 +123,8 @@ export default {
             id: 'text',
             // beforeDraw: (chart, a, b) => {
             beforeDraw: (chart) => {
-              const { width, height, ctx } = chart;
-
-              ctx.restore();
-              // how to add weight / bold??
-              ctx.font = `1.25rem sans-serif`;
-              ctx.textBaseline = 'middle';
+              const { ctx } = chart;
               // this variable should be (correctquestions+"/"+totalquestions)
-              const text = `${this.problemsAnalyzed.totalTimeTakenCorrect} / ${this.problemsAnalyzed.totalTimeTakenInCorrect}`;
-              const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.65;
-
-              ctx.fillText(text, textX, textY);
-              ctx.save();
-            },
-          },
-        ],
-      });
-    };
-
-    const chart6 = (id) => {
-      const chartEl = document.getElementById(id);
-
-      const qs = [this.problemsAnalyzed.averageTimeCorrect, this.problemsAnalyzed.averageTimeInCorrect]; // this should consist of 2x variables for correct questions and total questions let qs = [cor_qs,total_qs]
-      const questionsLabels = ['Correct', 'Incorrect'];
-
-      this.myChart6 = new Chart(chartEl, {
-        type: 'doughnut',
-        data: {
-          labels: questionsLabels,
-          datasets: [
-            {
-              label: 'Questions answered & total correct',
-              data: qs,
-              backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)'],
-            },
-          ],
-        },
-        options,
-        // plugin for inner text visualisation
-        plugins: [
-          {
-            id: 'text',
-            // beforeDraw: (chart, a, b) => {
-            beforeDraw: (chart) => {
-              const { width, height, ctx } = chart;
-
-              ctx.restore();
-              // how to add weight / bold??
-              ctx.font = `1.25rem sans-serif`;
-              ctx.textBaseline = 'middle';
-              // this variable should be (correctquestions+"/"+totalquestions)
-              const text = '22 secs';
-              const textX = Math.round((width - ctx.measureText(text).width) / 2);
-              const textY = height / 1.65;
-
-              ctx.fillText(text, textX, textY);
               ctx.save();
             },
           },
@@ -197,13 +133,18 @@ export default {
     };
 
     chart1('myChart');
-    // chart3('myChart3');
+    chart3('myChart3');
     chart5('myChart5');
-    chart6('myChart6');
   },
   beforeUnmount() {
     if (this.totalNumberOfProblemsChart) {
       this.totalNumberOfProblemsChart.destroy();
+    }
+    if (this.typesOfQuestionChart) {
+      this.typesOfQuestionChart.destroy();
+    }
+    if (this.difficultiesOfQuestionChart) {
+      this.difficultiesOfQuestionChart.destroy();
     }
   },
 };
@@ -218,22 +159,20 @@ export default {
       </div>
     </div>
     <div class="metrics">
-      <div class="metrics-heading">TOTAL NUMBER OF ERRORS</div>
+      <div class="metrics-heading">TYPES OF QUESTIONS ANSWERED</div>
       <div class="numbers">
-        <canvas id="myChart3" class="m-auto" width="225" height="225"></canvas>
+        <canvas id="myChart3" class="m-auto" width="300" height="300"></canvas>
       </div>
     </div>
     <div class="metrics">
-      <div class="metrics-heading">TOTAL TIME TAKEN</div>
+      <div class="metrics-heading">DIFFICULTIES OF QUESTIONS ANSWERED</div>
       <div class="numbers">
         <canvas id="myChart5" class="m-auto" width="300" height="300"></canvas>
       </div>
     </div>
     <div class="metrics">
-      <div class="metrics-heading">TOTAL TIME TAKEN PER PROBLEM</div>
-      <div class="numbers">
-        <canvas id="myChart6" class="m-auto" width="300" height="300"></canvas>
-      </div>
+      <div class="metrics-heading">AVERAGE TIME TAKEN PER PROBLEM</div>
+      <div class="numbers">{{ problemsAnalyzed.averageTimePerQuestion }} secs</div>
     </div>
   </div>
 </template>
@@ -251,8 +190,8 @@ export default {
   display: grid;
   gap: 0.2rem;
   align-items: stretch;
-  color: white;
   padding: 0.2rem;
+  font-size: 1.25rem;
 }
 .metrics-heading {
   display: grid;
