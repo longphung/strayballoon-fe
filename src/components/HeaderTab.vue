@@ -13,7 +13,7 @@ export default {
   inject: ['userData'],
   computed: {
     userName() {
-      return this.userData.userName;
+      return this.userData?.userName;
     },
   },
 };

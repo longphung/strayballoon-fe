@@ -25,7 +25,7 @@ export default {
   mounted() {
     this.axios = axios.create({
       headers: {
-        Authorization: `token ${this.userData.token}`,
+        Authorization: `token ${this.userData?.token}`,
       },
     });
     this.getStudents();

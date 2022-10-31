@@ -37,7 +37,7 @@ export default {
     });
   },
   beforeUnmount() {
-    this.tippy.destroy();
+    this.tippy[0]?.destroy();
   },
 };
 </script>

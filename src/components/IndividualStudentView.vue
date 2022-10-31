@@ -36,17 +36,9 @@ export default {
             if (progress[i].is_correct) {
               correct += 1;
               totalTimeTakenCorrect += progress[i].time_taken;
-              console.log('>>>>>CORRECT');
-              console.log(progress[i].question_type);
-              console.log(progress[i].question_level);
-              console.log('CORRECT');
             } else {
               inCorrect += 1;
               totalTimeTakenInCorrect += progress[i].time_taken;
-              console.log('>>>>>INCORRECT');
-              console.log(progress[i].question_type);
-              console.log(progress[i].question_level);
-              console.log('INCORRECT');
             }
 
             if (questionTypes[progress[i].question_type.toLowerCase()] === undefined) {
