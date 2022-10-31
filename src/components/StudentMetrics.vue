@@ -193,6 +193,7 @@ export default {
   padding: 0.2rem;
   font-size: 1.25rem;
 }
+
 .metrics-heading {
   display: grid;
   justify-content: center;
@@ -201,6 +202,7 @@ export default {
   font-size: 0.9rem;
   border-radius: 0.9rem;
   padding: 0.5rem;
+  color: white;
 }
 
 .numbers {
